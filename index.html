@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>TON CASE</title>
+  <style>
+    body {
+      background: #0a0f2c;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+      padding-top: 100px;
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      background: linear-gradient(45deg, #007bff, #00c2ff);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      cursor: pointer;
+    }
+    #result {
+      margin-top: 30px;
+      font-size: 22px;
+    }
+  </style>
+</head>
+<body>
+  <h1>TON CASE 🎁</h1>
+  <button onclick="openCase()">Открыть кейс</button>
+  <div id="result"></div>
+
+  <script>
+    const prizes = [
+      "NFT: Золотой дракон",
+      "NFT: Пиксельный кот",
+      "NFT: Хрустальный меч",
+      "Пусто"
+    ];
+    function openCase() {
+      const prize = prizes[Math.floor(Math.random() * prizes.length)];
+      document.getElementById("result").innerText = "Тебе выпало: " + prize;
+    }
+  </script>
+</body>
+</html>
