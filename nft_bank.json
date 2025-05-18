@@ -1,0 +1,46 @@
+{
+  "common": [
+    {
+      "name": "Crystal",
+      "image": "nft/crystal.png"
+    },
+    {
+      "name": "Coin",
+      "image": "nft/coin.png"
+    },
+    {
+      "name": "Badge",
+      "image": "nft/badge.png"
+    }
+  ],
+  "uncommon": [
+    {
+      "name": "Gem",
+      "image": "nft/gem.png"
+    },
+    {
+      "name": "Potion",
+      "image": "nft/potion.png"
+    }
+  ],
+  "rare": [
+    {
+      "name": "Crown",
+      "image": "nft/crown.png"
+    },
+    {
+      "name": "Blaster",
+      "image": "nft/blaster.png"
+    }
+  ],
+  "legendary": [
+    {
+      "name": "Phoenix",
+      "image": "nft/phoenix.png"
+    },
+    {
+      "name": "Spaceship",
+      "image": "nft/spaceship.png"
+    }
+  ]
+}
