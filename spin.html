@@ -1,70 +1,106 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Spin</title>
+  <title>Рулетка NFT</title>
   <style>
-    body { background: #0a0f2c; color: #fff; font-family: sans-serif; text-align: center; padding-top: 100px; }
-    button { padding: 15px 30px; font-size: 18px; background: linear-gradient(45deg, #007bff, #00c2ff); border: none; border-radius: 10px; color: white; cursor: pointer; }
-    #reward-screen { display: none; margin-top: 40px; }
-    #nft-image { width: 200px; height: 200px; object-fit: contain; border: 2px solid #fff; border-radius: 12px; }
+    body {
+      background-color: #0a0f2c;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .scroll-box {
+      width: 320px;
+      height: 420px;
+      overflow-y: auto;
+      border: 2px solid #00f0ff;
+      border-radius: 12px;
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.02);
+      box-shadow: 0 0 12px #00f0ff55;
+      scroll-behavior: smooth;
+    }
+
+    .nft-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 120px;
+      margin-bottom: 16px;
+      border-radius: 10px;
+      background: linear-gradient(145deg, #141b3c, #1a223e);
+      border: 2px solid #555;
+      color: #ccc;
+      font-size: 18px;
+      text-transform: uppercase;
+      transition: 0.3s;
+    }
+
+    .nft-item.common { border-color: #aaa; }
+    .nft-item.uncommon { border-color: #28a745; }
+    .nft-item.rare { border-color: #007bff; }
+    .nft-item.legendary { border-color: #ffc107; }
+
+    .spin-button {
+      margin-top: 30px;
+      padding: 16px 40px;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(to right, #00f0ff, #0088ff);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00f0ff99;
+      transition: transform 0.2s;
+    }
+
+    .spin-button:hover {
+      transform: scale(1.05);
+    }
   </style>
 </head>
 <body>
-  <button id="spin-button">Испытать фортуну</button>
+  <div class="container">
+    <div class="scroll-box" id="scroll-box">
+      <div class="nft-item common">NFT #1 — Common</div>
+      <div class="nft-item common">NFT #2 — Common</div>
+      <div class="nft-item uncommon">NFT #3 — Uncommon</div>
+      <div class="nft-item common">NFT #4 — Common</div>
+      <div class="nft-item rare">NFT #5 — Rare</div>
+      <div class="nft-item common">NFT #6 — Common</div>
+      <div class="nft-item legendary">NFT #7 — Legendary</div>
+      <div class="nft-item common">NFT #8 — Common</div>
+      <div class="nft-item uncommon">NFT #9 — Uncommon</div>
+      <div class="nft-item common">NFT #10 — Common</div>
+    </div>
 
-  <div id="reward-screen">
-    <img id="nft-image" src="" alt="NFT Image" />
-    <h2 id="nft-name">Ваш подарок появится здесь</h2>
-    <button onclick="alert('NFT отправлен!')">Забрать подарок</button>
+    <button class="spin-button" onclick="spin()">Испытать фортуну</button>
   </div>
 
-  
-<script>
-async function getDropResult(spinCount) {
-  const dropLogic = await fetch('drop_logic.json').then(res => res.json());
-  const nftBank = await fetch('nft_bank.json').then(res => res.json());
+  <script>
+    function spin() {
+      const box = document.getElementById('scroll-box');
+      const items = box.querySelectorAll('.nft-item');
+      const randomIndex = Math.floor(Math.random() * items.length);
+      const selected = items[randomIndex];
+      box.scrollTop = selected.offsetTop - 50;
 
-  let stepConfig = dropLogic.steps.find(step => {
-    const [min, max] = step.range;
-    return spinCount >= min && (max === "infinity" || spinCount <= max);
-  });
-
-  let rarity;
-
-  if (stepConfig.guaranteed_rarity) {
-    rarity = stepConfig.guaranteed_rarity;
-  } else if (stepConfig.allowed_rarities) {
-    rarity = stepConfig.allowed_rarities[0];
-  } else if (stepConfig.chance_table) {
-    const roll = Math.random();
-    let sum = 0;
-    for (const item of stepConfig.chance_table) {
-      sum += item.chance;
-      if (roll < sum) {
-        rarity = item.rarity;
-        break;
-      }
+      selected.style.boxShadow = '0 0 15px 5px #00f0ff';
+      setTimeout(() => {
+        selected.style.boxShadow = '';
+      }, 1200);
     }
-  }
-
-  const possibleNFTs = nftBank[rarity];
-  const chosenNFT = possibleNFTs[Math.floor(Math.random() * possibleNFTs.length)];
-
-  // Отображаем результат
-  document.getElementById("nft-name").textContent = `${rarity.toUpperCase()} – ${chosenNFT.name}`;
-  document.getElementById("nft-image").src = chosenNFT.image;
-  document.getElementById("reward-screen").style.display = "block";
-}
-
-document.getElementById("spin-button").addEventListener("click", () => {
-  const spinCount = parseInt(localStorage.getItem("spins") || "0") + 1;
-  localStorage.setItem("spins", spinCount);
-  getDropResult(spinCount);
-});
-</script>
-
+  </script>
 </body>
 </html>
-Update spin logic
+Обновление ленты
