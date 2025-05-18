@@ -1,0 +1,51 @@
+{
+  "steps": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "guaranteed_rarity": "common"
+    },
+    {
+      "range": [
+        2,
+        9
+      ],
+      "allowed_rarities": [
+        "common"
+      ]
+    },
+    {
+      "range": [
+        10,
+        10
+      ],
+      "guaranteed_rarity": "uncommon"
+    },
+    {
+      "range": [
+        11,
+        "infinity"
+      ],
+      "chance_table": [
+        {
+          "rarity": "common",
+          "chance": 0.88
+        },
+        {
+          "rarity": "uncommon",
+          "chance": 0.1
+        },
+        {
+          "rarity": "rare",
+          "chance": 0.015
+        },
+        {
+          "rarity": "legendary",
+          "chance": 0.005
+        }
+      ]
+    }
+  ]
+}
