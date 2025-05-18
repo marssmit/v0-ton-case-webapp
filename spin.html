@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -71,23 +72,69 @@
 </head>
 <body>
   <div class="container">
-    <div class="scroll-box" id="scroll-box">
-      <div class="nft-item common">NFT #1 — Common</div>
-      <div class="nft-item common">NFT #2 — Common</div>
-      <div class="nft-item uncommon">NFT #3 — Uncommon</div>
-      <div class="nft-item common">NFT #4 — Common</div>
-      <div class="nft-item rare">NFT #5 — Rare</div>
-      <div class="nft-item common">NFT #6 — Common</div>
-      <div class="nft-item legendary">NFT #7 — Legendary</div>
-      <div class="nft-item common">NFT #8 — Common</div>
-      <div class="nft-item uncommon">NFT #9 — Uncommon</div>
-      <div class="nft-item common">NFT #10 — Common</div>
-    </div>
-
+    <div class="scroll-box" id="scroll-box"></div>
     <button class="spin-button" onclick="spin()">Испытать фортуну</button>
   </div>
 
   <script>
+    let currentItems = [];
+
+    async function loadNFTs() {
+      const logic = await fetch('drop_logic.json').then(res => res.json());
+      const bank = await fetch('nft_bank.json').then(res => res.json());
+
+      const spinCount = parseInt(localStorage.getItem("spins") || "0") + 1;
+      localStorage.setItem("spins", spinCount);
+
+      let rarity = "common";
+      for (const step of logic.steps) {
+        const [min, max] = step.range;
+        const inRange = max === "infinity" ? spinCount >= min : spinCount >= min && spinCount <= max;
+        if (inRange) {
+          if (step.guaranteed_rarity) rarity = step.guaranteed_rarity;
+          else if (step.allowed_rarities) rarity = step.allowed_rarities[0];
+          else if (step.chance_table) {
+            const roll = Math.random();
+            let sum = 0;
+            for (const item of step.chance_table) {
+              sum += item.chance;
+              if (roll < sum) {
+                rarity = item.rarity;
+                break;
+              }
+            }
+          }
+          break;
+        }
+      }
+
+      const pool = bank[rarity];
+      const sample = [];
+      for (let i = 0; i < 10; i++) {
+        const pick = pool[Math.floor(Math.random() * pool.length)];
+        sample.push(pick);
+      }
+
+      currentItems = sample.map((item, index) => ({
+        ...item,
+        rarity,
+        id: index
+      }));
+
+      renderItems();
+    }
+
+    function renderItems() {
+      const container = document.getElementById("scroll-box");
+      container.innerHTML = "";
+      currentItems.forEach(item => {
+        const el = document.createElement("div");
+        el.className = `nft-item ${item.rarity}`;
+        el.textContent = `${item.name}`;
+        container.appendChild(el);
+      });
+    }
+
     function spin() {
       const box = document.getElementById('scroll-box');
       const items = box.querySelectorAll('.nft-item');
@@ -98,9 +145,11 @@
       selected.style.boxShadow = '0 0 15px 5px #00f0ff';
       setTimeout(() => {
         selected.style.boxShadow = '';
+        alert(`🎁 Тебе выпал: ${selected.textContent}`);
       }, 1200);
     }
+
+    loadNFTs();
   </script>
 </body>
 </html>
-Обновление ленты
