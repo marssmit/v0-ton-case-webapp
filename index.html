@@ -1,121 +1,57 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>TON CASE</title>
   <style>
-    body {
+    html, body {
       margin: 0;
-      background: #0a0f2c;
-      color: #fff;
-      font-family: sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      padding: 0;
       overflow: hidden;
+      height: 100%;
+      font-family: Arial, sans-serif;
     }
 
-    #particles-js {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background-color: #0a0f2c;
+    body {
+      background: url('cyber_bg.gif') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     #case-container {
+      position: relative;
       cursor: pointer;
       transition: transform 0.3s ease;
     }
 
     #case-container:hover {
-      filter: drop-shadow(0 0 10px #00ffff);
       transform: scale(1.05);
     }
 
     #case-image {
-      width: 240px;
-    }
-
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
+      width: 220px;
+      height: auto;
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 </head>
 <body>
 
-  <div id="particles-js"></div>
-
-  <h1>Выбери кейс</h1>
-
   <div id="case-container">
-    <img id="case-image" src="case_closed.png" alt="Кейс" />
+    <img id="case-image" src="case_closed.png" alt="Case" />
   </div>
 
   <script>
-    particlesJS("particles-js", {
-      "particles": {
-        "number": {
-          "value": 80,
-          "density": { "enable": true, "value_area": 800 }
-        },
-        "color": { "value": "#00f0ff" },
-        "shape": {
-          "type": "circle",
-          "stroke": { "width": 0, "color": "#000000" }
-        },
-        "opacity": {
-          "value": 0.2,
-          "random": true,
-          "anim": { "enable": false }
-        },
-        "size": {
-          "value": 3,
-          "random": true,
-          "anim": { "enable": false }
-        },
-        "line_linked": {
-          "enable": true,
-          "distance": 130,
-          "color": "#00f0ff",
-          "opacity": 0.1,
-          "width": 1
-        },
-        "move": {
-          "enable": true,
-          "speed": 1.2,
-          "direction": "none",
-          "out_mode": "out"
-        }
-      },
-      "interactivity": {
-        "detect_on": "canvas",
-        "events": {
-          "onhover": { "enable": true, "mode": "repulse" },
-          "onclick": { "enable": false }
-        },
-        "modes": {
-          "repulse": { "distance": 100 }
-        }
-      },
-      "retina_detect": true
-    });
+    const caseImage = document.getElementById("case-image");
 
-    const container = document.getElementById("case-container");
-    const image = document.getElementById("case-image");
-
-    container.addEventListener("click", () => {
-      image.src = "case_opening.gif";
+    caseImage.addEventListener("click", () => {
+      caseImage.src = "case_opening.gif"; // замена на анимацию
       setTimeout(() => {
-        window.location.href = "spin.html";
-      }, 2000);
+        window.location.href = "spin.html"; // переход на спин
+      }, 1300); // длительность анимации, в мс
     });
   </script>
+
 </body>
 </html>
