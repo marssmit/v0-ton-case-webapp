@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -14,6 +15,16 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
+      overflow: hidden;
+    }
+
+    #particles-js {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-color: #0a0f2c;
     }
 
     #case-container {
@@ -35,22 +46,75 @@
       margin-bottom: 20px;
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 </head>
 <body>
+
+  <div id="particles-js"></div>
+
   <h1>Выбери кейс</h1>
+
   <div id="case-container">
     <img id="case-image" src="case_closed.png" alt="Кейс" />
   </div>
 
   <script>
+    particlesJS("particles-js", {
+      "particles": {
+        "number": {
+          "value": 80,
+          "density": { "enable": true, "value_area": 800 }
+        },
+        "color": { "value": "#00f0ff" },
+        "shape": {
+          "type": "circle",
+          "stroke": { "width": 0, "color": "#000000" }
+        },
+        "opacity": {
+          "value": 0.2,
+          "random": true,
+          "anim": { "enable": false }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": { "enable": false }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 130,
+          "color": "#00f0ff",
+          "opacity": 0.1,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 1.2,
+          "direction": "none",
+          "out_mode": "out"
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": { "enable": true, "mode": "repulse" },
+          "onclick": { "enable": false }
+        },
+        "modes": {
+          "repulse": { "distance": 100 }
+        }
+      },
+      "retina_detect": true
+    });
+
     const container = document.getElementById("case-container");
     const image = document.getElementById("case-image");
 
     container.addEventListener("click", () => {
-      image.src = "case_opening.gif"; // убедись что имя файла правильное
+      image.src = "case_opening.gif";
       setTimeout(() => {
-        window.location.href = "spin.html"; // через 2 секунды переход
-      }, 2000); // 2000 мс = 2 сек
+        window.location.href = "spin.html";
+      }, 2000);
     });
   </script>
 </body>
