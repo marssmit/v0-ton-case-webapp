@@ -17,73 +17,40 @@
     }
 
     #case-container {
-      position: relative;
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: transform 0.3s ease;
     }
 
     #case-container:hover {
-      filter: drop-shadow(0 0 15px #00f0ff);
+      filter: drop-shadow(0 0 10px #00ffff);
       transform: scale(1.05);
     }
 
     #case-image {
-      width: 220px;
-      border-radius: 10px;
-    }
-
-    #overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.8);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      z-index: 10;
-    }
-
-    .flash {
-      animation: flash 0.3s;
-    }
-
-    @keyframes flash {
-      0% { filter: brightness(1); }
-      50% { filter: brightness(2.5); }
-      100% { filter: brightness(1); }
+      width: 240px;
     }
 
     h1 {
-      margin-bottom: 30px;
       font-size: 24px;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
   <h1>Выбери кейс</h1>
-
-  <div id="overlay"></div>
-
   <div id="case-container">
-    <img id="case-image" src="case_closed.png" alt="Case" />
+    <img id="case-image" src="case_closed.png" alt="Кейс" />
   </div>
 
   <script>
-    const caseImage = document.getElementById("case-image");
-    const overlay = document.getElementById("overlay");
+    const container = document.getElementById("case-container");
+    const image = document.getElementById("case-image");
 
-    caseImage.addEventListener("click", () => {
-      overlay.style.opacity = 1;
-      caseImage.classList.add("flash");
-
+    container.addEventListener("click", () => {
+      image.src = "case_opening.gif"; // убедись что имя файла правильное
       setTimeout(() => {
-        caseImage.src = "case_opening.gif";
-      }, 300);
-
-      setTimeout(() => {
-        window.location.href = "spin.html";
-      }, 1800); // длина анимации gif
+        window.location.href = "spin.html"; // через 2 секунды переход
+      }, 2000); // 2000 мс = 2 сек
     });
   </script>
 </body>
