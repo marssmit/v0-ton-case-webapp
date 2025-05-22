@@ -1,79 +1,46 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Выбор кейса</title>
+  <meta charset="UTF-8" />
+  <title>TON CASE</title>
   <style>
     body {
-      margin: 0;
-      background: radial-gradient(circle at center, #0f0f1a 0%, #000 100%);
-      font-family: 'Segoe UI', sans-serif;
-      color: white;
+      background: #0a0f2c;
+      color: #fff;
+      font-family: sans-serif;
       text-align: center;
-      padding: 20px;
+      padding-top: 100px;
     }
-    h1 {
-      margin-bottom: 30px;
-    }
-    .case-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-    }
-    .case {
-      background: #111;
-      border: 3px solid #0ff;
-      border-radius: 20px;
-      width: 160px;
-      padding: 15px;
+    img {
+      width: 200px;
       cursor: pointer;
-      box-shadow: 0 0 15px #0ff;
-      transition: 0.3s ease;
+      transition: transform 0.2s;
     }
-    .case:hover {
+    img:hover {
       transform: scale(1.05);
-    }
-    .nft-icon {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      margin: 0 auto 10px;
-      background-size: cover;
-      background-position: center;
-      border: 3px solid #0ff;
-      box-shadow: 0 0 10px #0ff;
-    }
-    .case-name {
-      font-size: 16px;
-      font-weight: bold;
-      margin: 5px 0;
-    }
-    .price {
-      font-size: 14px;
-      color: #0ff;
     }
   </style>
 </head>
 <body>
-  <h1>Выберите кейс</h1>
-  <div class="case-container">
-    <div class="case" onclick="window.location.href='spin.html'">
-      <div class="nft-icon" style="background-image: url('https://via.placeholder.com/80x80?text=🐱');"></div>
-      <div class="case-name">Cyber Cats</div>
-      <div class="price">3⭐ за спин</div>
-    </div>
-    <div class="case" onclick="window.location.href='spin.html'">
-      <div class="nft-icon" style="background-image: url('https://via.placeholder.com/80x80?text=🤖');"></div>
-      <div class="case-name">Glitch Bots</div>
-      <div class="price">5⭐ за спин</div>
-    </div>
-    <div class="case" onclick="window.location.href='spin.html'">
-      <div class="nft-icon" style="background-image: url('https://via.placeholder.com/80x80?text=👻');"></div>
-      <div class="case-name">Spirit Scrolls</div>
-      <div class="price">7⭐ за спин</div>
-    </div>
-  </div>
+
+  <h1>Выбери кейс</h1>
+
+  <!-- Кейс в закрытом состоянии -->
+  <img id="case" src="case_closed.png" alt="Case" />
+
+  <script>
+    const caseElement = document.getElementById("case");
+
+    caseElement.addEventListener("click", () => {
+      // Заменяем картинку на гифку
+      caseElement.src = "case_opening.gif";
+
+      // Через 2 секунды переходим на spin.html
+      setTimeout(() => {
+        window.location.href = "spin.html";
+      }, 2000);
+    });
+  </script>
+
 </body>
 </html>
