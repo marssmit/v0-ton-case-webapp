@@ -1,114 +1,64 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NFT-кейсы</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body, html {
-            height: 100%;
-            overflow: hidden;
-            font-family: 'Roboto', sans-serif;
-            color: #ffffff;
-            background: radial-gradient(circle, #0d0218, #05000c);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .background {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: -1;
-        }
-        .background div {
-            position: absolute;
-            background: rgba(120, 80, 255, 0.2);
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            animation: float 10s infinite ease-in-out;
-        }
-        .case-container {
-            width: 300px;
-            height: 400px;
-            background: linear-gradient(145deg, #221133, #330066);
-            border-radius: 25px;
-            box-shadow: 0 0 25px rgba(180, 80, 255, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-        .case-image {
-            width: 150px;
-            height: 150px;
-            background-image: url('https://i.imgur.com/YJi3cK5.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            animation: pulse 3s infinite;
-        }
-        .case-title {
-            margin-top: 20px;
-            font-size: 22px;
-            text-shadow: 0 0 10px rgba(180, 80, 255, 0.8);
-        }
-        .open-btn {
-            margin-top: 30px;
-            padding: 12px 25px;
-            background-color: #6600ff;
-            border: none;
-            border-radius: 20px;
-            color: #ffffff;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-        .open-btn:hover {
-            background-color: #8800ff;
-            box-shadow: 0 0 15px rgba(180, 80, 255, 0.9);
-        }
+  <meta charset="UTF-8" />
+  <title>TON CASE</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      color: white;
+      background: url('your_background.gif') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
 
-        @keyframes float {
-            0% { transform: translateY(0) translateX(0); opacity: 0.8; }
-            50% { transform: translateY(-100px) translateX(100px); opacity: 0.2; }
-            100% { transform: translateY(0) translateX(0); opacity: 0.8; }
-        }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #00ffff;
+    }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-    </style>
+    #case-container {
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      z-index: 1;
+    }
+
+    #case-container:hover {
+      filter: drop-shadow(0 0 15px #00ffff);
+      transform: scale(1.05);
+    }
+
+    #case-image {
+      width: 240px;
+    }
+  </style>
 </head>
 <body>
 
-<div class="background">
-    <script>
-        const bg = document.querySelector('.background');
-        for (let i = 0; i < 100; i++) {
-            const dot = document.createElement('div');
-            dot.style.top = Math.random() * 100 + '%';
-            dot.style.left = Math.random() * 100 + '%';
-            dot.style.animationDelay = Math.random() * 5 + 's';
-            bg.appendChild(dot);
-        }
-    </script>
-</div>
+  <h1>Выбери кейс</h1>
 
-<div class="case-container">
-    <div class="case-image"></div>
-    <div class="case-title">NFT Cyber Case</div>
-    <button class="open-btn">Испытать фортуну</button>
-</div>
+  <div id="case-container">
+    <img id="case-image" src="case_closed.png" alt="Кейс" />
+  </div>
+
+  <script>
+    const container = document.getElementById("case-container");
+    const image = document.getElementById("case-image");
+
+    container.addEventListener("click", () => {
+      image.src = "case_opening.gif"; // путь к твоей гиф-анимации
+      setTimeout(() => {
+        window.location.href = "spin.html"; // переход на спин
+      }, 2000); // длительность анимации
+    });
+  </script>
 
 </body>
 </html>
