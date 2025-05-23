@@ -18,6 +18,31 @@
       overflow: hidden;
     }
 
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .animated-bg div {
+      position: absolute;
+      background: rgba(0, 255, 255, 0.1);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      animation: move 10s infinite ease-in-out;
+    }
+
+    @keyframes move {
+      0% { transform: translateY(0) translateX(0); opacity: 1; }
+      50% { transform: translateY(-200px) translateX(200px); opacity: 0.2; }
+      100% { transform: translateY(0) translateX(0); opacity: 1; }
+    }
+
     h1 {
       font-size: 24px;
       margin-bottom: 20px;
@@ -42,6 +67,19 @@
 </head>
 <body>
 
+  <div class="animated-bg">
+    <script>
+      const bg = document.querySelector('.animated-bg');
+      for (let i = 0; i < 50; i++) {
+        const dot = document.createElement('div');
+        dot.style.top = Math.random() * 100 + '%';
+        dot.style.left = Math.random() * 100 + '%';
+        dot.style.animationDelay = Math.random() * 5 + 's';
+        bg.appendChild(dot);
+      }
+    </script>
+  </div>
+
   <h1>Выбери кейс</h1>
 
   <div id="case-container">
@@ -52,11 +90,16 @@
     const container = document.getElementById("case-container");
     const image = document.getElementById("case-image");
 
+    container.addEventListener("mouseover", () => {
+      image.src = "case_opening.gif";
+    });
+
+    container.addEventListener("mouseout", () => {
+      image.src = "case_closed.png";
+    });
+
     container.addEventListener("click", () => {
-      image.src = "case_opening.gif"; // путь к твоей гиф-анимации
-      setTimeout(() => {
-        window.location.href = "spin.html"; // переход на спин
-      }, 2000); // длительность анимации
+      window.location.href = "spin.html";
     });
   </script>
 
