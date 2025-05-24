@@ -19,17 +19,17 @@
 
     .container {
       display: grid;
-      grid-template-columns: repeat(2, 1fr); /* Всегда 2 столбца */
+      grid-template-columns: repeat(2, 1fr);
       gap: 15px;
       width: 90%;
-      max-width: 500px; /* Ограничиваем ширину контейнера */
+      max-width: 600px;
     }
 
     .case-container {
       cursor: pointer;
       transition: transform 0.3s ease;
-      aspect-ratio: 1 / 1; /* Всегда квадратные кейсы */
-      width: 100%; /* Занимают всю ширину ячейки */
+      aspect-ratio: 1 / 1;
+      width: 100%;
       position: relative;
       overflow: hidden;
       border-radius: 12px;
@@ -53,6 +53,17 @@
       position: absolute;
       top: 0;
       left: 0;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        max-width: 100%; /* Убираем ограничение ширины на телефоне */
+      }
+
+      .case-container {
+        width: 45vw; /* Увеличиваем кейсы до 45% ширины экрана */
+        height: 45vw;
+      }
     }
   </style>
 </head>
