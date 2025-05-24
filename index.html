@@ -52,22 +52,31 @@
     const container = document.getElementById("case-container");
     const image = document.getElementById("case-image");
 
-    let openTimer, closeTimer;
+    let state = "closed"; // возможные значения: 'closed', 'opening', 'open', 'closing'
+    let timer;
 
     container.addEventListener("mouseenter", () => {
-      clearTimeout(closeTimer); // Сброс таймера закрытия
-      image.src = "case_opening.gif"; // Запуск анимации открытия
-      openTimer = setTimeout(() => {
-        image.src = "case_open.webp"; // После анимации показываем открытый кейс
-      }, 1500); // Длительность case_opening.gif
+      if (state === "closed" || state === "closing") {
+        clearTimeout(timer);
+        image.src = "case_opening.gif";
+        state = "opening";
+        timer = setTimeout(() => {
+          image.src = "case_open.webp";
+          state = "open";
+        }, 1500);
+      }
     });
 
     container.addEventListener("mouseleave", () => {
-      clearTimeout(openTimer); // Сброс таймера открытия
-      image.src = "case_closing.gif"; // Запуск анимации закрытия
-      closeTimer = setTimeout(() => {
-        image.src = "sticker_closed.webp"; // После закрытия возвращаем кейс в закрытое состояние
-      }, 1500); // Длительность case_closing.gif
+      if (state === "open" || state === "opening") {
+        clearTimeout(timer);
+        image.src = "case_closing.gif";
+        state = "closing";
+        timer = setTimeout(() => {
+          image.src = "sticker_closed.webp";
+          state = "closed";
+        }, 1500);
+      }
     });
 
     container.addEventListener("click", () => {
