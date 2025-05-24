@@ -53,21 +53,28 @@
     const image = document.getElementById("case-image");
 
     let openTimeout, closeTimeout;
+    let isOpen = false; // флаг состояния кейса
 
-    container.addEventListener("mouseover", () => {
-      clearTimeout(closeTimeout);
-      image.src = "case_opening.gif";
-      openTimeout = setTimeout(() => {
-        image.src = "case_open.webp";
-      }, 1500);
+    container.addEventListener("mouseenter", () => {
+      if (!isOpen) {
+        clearTimeout(closeTimeout);
+        image.src = "case_opening.gif";
+        openTimeout = setTimeout(() => {
+          image.src = "case_open.webp";
+          isOpen = true;
+        }, 1500);
+      }
     });
 
     container.addEventListener("mouseleave", () => {
-      clearTimeout(openTimeout);
-      image.src = "case_closing.gif";
-      closeTimeout = setTimeout(() => {
-        image.src = "sticker_closed.webp";
-      }, 1500);
+      if (isOpen) {
+        clearTimeout(openTimeout);
+        image.src = "case_closing.gif";
+        closeTimeout = setTimeout(() => {
+          image.src = "sticker_closed.webp";
+          isOpen = false;
+        }, 1500);
+      }
     });
 
     container.addEventListener("click", () => {
