@@ -1,128 +1,64 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <title>TON CASE</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      color: white;
-      background: url('stars_background.gif') no-repeat center center fixed;
-      background-size: cover;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+<style>
+  body {
+    margin: 0;
+    font-family: sans-serif;
+    color: white;
+    background: url('stars_background.gif') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
+  .container {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 15px;
+    max-width: 600px; /* Для ПК */
+    width: 100%;
+  }
+
+  .case-container {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    width: 120px;  /* Базовый размер ПК */
+    height: 120px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    text-shadow: 0 0 10px black;
+  }
+
+  .case-container:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 15px #00ffff);
+  }
+
+  .case-container video, .case-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  @media (max-width: 600px) {
     .container {
-      display: grid;
-      grid-template-columns: repeat(2, auto);
-      gap: 15px;
-      width: auto; /* Убираем ограничение ширины */
+      grid-template-columns: repeat(2, 1fr); /* Чётко 2 столбца на телефоне */
+      max-width: 100%; /* Ширина контейнера — вся ширина экрана */
     }
 
     .case-container {
-      cursor: pointer;
-      transition: transform 0.3s ease;
-      width: 120px; /* ПК размер */
-      height: 120px;
-      position: relative;
-      overflow: hidden;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.1);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-weight: bold;
-      text-shadow: 0 0 10px black;
+      width: 47vw; /* Каждый кейс занимает почти половину ширины */
+      height: 47vw;
     }
-
-    .case-container:hover {
-      transform: scale(1.05);
-      filter: drop-shadow(0 0 15px #00ffff);
-    }
-
-    .case-container video, .case-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-
-    /* 📱 Увеличиваем кейсы на телефоне */
-    @media (max-width: 600px) {
-      .container {
-        grid-template-columns: repeat(2, 1fr); /* Чётко 2 столбца */
-      }
-
-      .case-container {
-        width: 45vw; /* Кейсы занимают почти половину ширины */
-        height: 45vw;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <div class="container">
-    <div class="case-container" id="animated-case">
-      <video id="case-video" muted playsinline preload="auto" style="display: none;">
-        <source src="case_opening.webm" type="video/webm">
-      </video>
-      <img id="case-static" src="sticker_closed.png" alt="Кейс" />
-    </div>
-
-    <div class="case-container">Кейс 2</div>
-    <div class="case-container">Кейс 3</div>
-    <div class="case-container">Кейс 4</div>
-    <div class="case-container">Кейс 5</div>
-    <div class="case-container">Кейс 6</div>
-    <div class="case-container">Кейс 7</div>
-    <div class="case-container">Кейс 8</div>
-  </div>
-
-  <script>
-    const container = document.getElementById("animated-case");
-    const video = document.getElementById("case-video");
-    const staticImg = document.getElementById("case-static");
-
-    container.addEventListener("mouseenter", () => {
-      staticImg.style.display = "none";
-      video.style.display = "block";
-      video.src = "case_opening.webm";
-      video.loop = false;
-      video.currentTime = 0;
-      video.play();
-      video.onended = () => {
-        video.style.display = "none";
-        staticImg.src = "case_open.png";
-        staticImg.style.display = "block";
-      };
-    });
-
-    container.addEventListener("mouseleave", () => {
-      staticImg.style.display = "none";
-      video.style.display = "block";
-      video.src = "case_closing.webm";
-      video.loop = false;
-      video.currentTime = 0;
-      video.play();
-      video.onended = () => {
-        video.style.display = "none";
-        staticImg.src = "sticker_closed.png";
-        staticImg.style.display = "block";
-      };
-    });
-
-    container.addEventListener("click", () => {
-      window.location.href = "spin.html";
-    });
-  </script>
-
-</body>
-</html>
+  }
+</style>
