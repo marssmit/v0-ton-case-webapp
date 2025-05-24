@@ -19,17 +19,16 @@
 
     .container {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, auto);
       gap: 15px;
-      width: 90%;
-      max-width: 600px;
+      width: auto; /* Убираем ограничение ширины */
     }
 
     .case-container {
       cursor: pointer;
       transition: transform 0.3s ease;
-      width: 120px;  /* Размер для ПК */
-      height: 120px; /* Размер для ПК */
+      width: 120px; /* ПК размер */
+      height: 120px;
       position: relative;
       overflow: hidden;
       border-radius: 12px;
@@ -55,11 +54,15 @@
       left: 0;
     }
 
-    /* 📱 Медиа-запрос для телефонов */
+    /* 📱 Увеличиваем кейсы на телефоне */
     @media (max-width: 600px) {
+      .container {
+        grid-template-columns: repeat(2, 1fr); /* Чётко 2 столбца */
+      }
+
       .case-container {
-        width: 47vw; /* Увеличенный размер на телефоне */
-        height: 47vw;
+        width: 45vw; /* Кейсы занимают почти половину ширины */
+        height: 45vw;
       }
     }
   </style>
