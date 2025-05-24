@@ -28,18 +28,14 @@
       cursor: pointer;
       transition: transform 0.3s ease;
       z-index: 1;
-      width: 240px; /* Фиксируем размер контейнера */
-      height: 240px;
+      display: inline-block;
       position: relative;
     }
 
     #case-container video, #case-container img {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      object-fit: cover; /* Подгонка видео и изображения */
+      display: block;
+      max-width: 100%;
+      height: auto;
     }
   </style>
 </head>
