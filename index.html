@@ -19,17 +19,17 @@
 
     .container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      grid-template-columns: repeat(2, 1fr); /* Всегда 2 столбца */
       gap: 15px;
       width: 90%;
-      max-width: 600px;
+      max-width: 500px; /* Ограничиваем ширину контейнера */
     }
 
     .case-container {
       cursor: pointer;
       transition: transform 0.3s ease;
-      width: 120px;
-      height: 120px;
+      aspect-ratio: 1 / 1; /* Всегда квадратные кейсы */
+      width: 100%; /* Занимают всю ширину ячейки */
       position: relative;
       overflow: hidden;
       border-radius: 12px;
@@ -54,19 +54,11 @@
       top: 0;
       left: 0;
     }
-
-    @media (max-width: 600px) {
-      .case-container {
-        width: 30vw;
-        height: 30vw;
-      }
-    }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <!-- Первый кейс с анимацией -->
     <div class="case-container" id="animated-case">
       <video id="case-video" muted playsinline preload="auto" style="display: none;">
         <source src="case_opening.webm" type="video/webm">
@@ -74,7 +66,6 @@
       <img id="case-static" src="sticker_closed.png" alt="Кейс" />
     </div>
 
-    <!-- Остальные заглушки -->
     <div class="case-container">Кейс 2</div>
     <div class="case-container">Кейс 3</div>
     <div class="case-container">Кейс 4</div>
@@ -98,7 +89,7 @@
       video.play();
       video.onended = () => {
         video.style.display = "none";
-        staticImg.src = "case_open.png"; // PNG открытого кейса
+        staticImg.src = "case_open.png";
         staticImg.style.display = "block";
       };
     });
@@ -112,7 +103,7 @@
       video.play();
       video.onended = () => {
         video.style.display = "none";
-        staticImg.src = "sticker_closed.png"; // закрытый кейс
+        staticImg.src = "sticker_closed.png";
         staticImg.style.display = "block";
       };
     });
