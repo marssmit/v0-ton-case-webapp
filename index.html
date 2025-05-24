@@ -56,18 +56,18 @@
 
     container.addEventListener("mouseover", () => {
       clearTimeout(closeTimeout);
-      image.src = "case_opening.gif"; // Анимация открытия кейса
+      image.src = "case_opening.gif";
       openTimeout = setTimeout(() => {
-        image.src = "case_open.webp"; // Статичное открытое состояние
-      }, 1500); // Длительность case_opening.gif
+        image.src = "case_open.webp";
+      }, 1500);
     });
 
-    container.addEventListener("mouseout", () => {
+    container.addEventListener("mouseleave", () => {
       clearTimeout(openTimeout);
-      image.src = "case_closing.gif"; // Анимация закрытия кейса
+      image.src = "case_closing.gif";
       closeTimeout = setTimeout(() => {
-        image.src = "sticker_closed.webp"; // Возврат к закрытому кейсу
-      }, 1500); // Длительность case_closing.gif
+        image.src = "sticker_closed.webp";
+      }, 1500);
     });
 
     container.addEventListener("click", () => {
