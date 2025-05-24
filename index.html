@@ -11,88 +11,55 @@
       background: url('your_background.gif') no-repeat center center fixed;
       background-size: cover;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       height: 100vh;
       overflow: hidden;
     }
 
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-      text-shadow: 0 0 10px #00ffff;
+    .container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 20px;
     }
 
-    #case-container {
+    .case-container {
       cursor: pointer;
       transition: transform 0.3s ease;
       z-index: 1;
-      width: 240px;
-      height: 240px;
+      width: 120px; /* Уменьшенный размер кейса */
+      height: 120px;
       position: relative;
       overflow: hidden;
       border-radius: 12px;
+      background: rgba(255, 255, 255, 0.1); /* Временная заглушка */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-weight: bold;
+      text-shadow: 0 0 10px black;
     }
 
-    #case-container video, #case-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      position: absolute;
-      top: 0;
-      left: 0;
+    .case-container:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 15px #00ffff);
     }
   </style>
 </head>
 <body>
 
-  <h1>Выбери кейс</h1>
-
-  <div id="case-container">
-    <video id="case-video" muted playsinline preload="auto" style="display: none;">
-      <source src="case_opening.webm" type="video/webm">
-    </video>
-    <img id="case-static" src="sticker_closed.png" alt="Кейс" />
+  <div class="container">
+    <!-- Заглушки для 8 кейсов -->
+    <div class="case-container">Кейс 1</div>
+    <div class="case-container">Кейс 2</div>
+    <div class="case-container">Кейс 3</div>
+    <div class="case-container">Кейс 4</div>
+    <div class="case-container">Кейс 5</div>
+    <div class="case-container">Кейс 6</div>
+    <div class="case-container">Кейс 7</div>
+    <div class="case-container">Кейс 8</div>
   </div>
-
-  <script>
-    const container = document.getElementById("case-container");
-    const video = document.getElementById("case-video");
-    const staticImg = document.getElementById("case-static");
-
-    container.addEventListener("mouseenter", () => {
-      staticImg.style.display = "none";
-      video.style.display = "block";
-      video.src = "case_opening.webm";
-      video.loop = false;
-      video.currentTime = 0;
-      video.play();
-      video.onended = () => {
-        video.style.display = "none";
-        staticImg.src = "case_open.png"; // Временно можно использовать sticker_closed.png
-        staticImg.style.display = "block";
-      };
-    });
-
-    container.addEventListener("mouseleave", () => {
-      staticImg.style.display = "none";
-      video.style.display = "block";
-      video.src = "case_closing.webm";
-      video.loop = false;
-      video.currentTime = 0;
-      video.play();
-      video.onended = () => {
-        video.style.display = "none";
-        staticImg.src = "sticker_closed.png";
-        staticImg.style.display = "block";
-      };
-    });
-
-    container.addEventListener("click", () => {
-      window.location.href = "spin.html";
-    });
-  </script>
 
 </body>
 </html>
