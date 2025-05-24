@@ -8,7 +8,7 @@
       margin: 0;
       font-family: sans-serif;
       color: white;
-      background: url('your_background.gif') no-repeat center center fixed;
+      background: url('your_background_with_stars.png') no-repeat center center fixed;
       background-size: cover;
       display: flex;
       justify-content: center;
@@ -27,7 +27,7 @@
       cursor: pointer;
       transition: transform 0.3s ease;
       z-index: 1;
-      width: 120px; /* Уменьшенный размер кейса */
+      width: 120px; /* Базовый размер для ПК */
       height: 120px;
       position: relative;
       overflow: hidden;
@@ -53,6 +53,14 @@
       position: absolute;
       top: 0;
       left: 0;
+    }
+
+    /* 📱 Адаптивная вёрстка для телефонов */
+    @media (max-width: 600px) {
+      .case-container {
+        width: 30vw; /* 30% ширины экрана */
+        height: 30vw;
+      }
     }
   </style>
 </head>
@@ -91,7 +99,7 @@
       video.play();
       video.onended = () => {
         video.style.display = "none";
-        staticImg.src = "case_open.png"; // открытый кейс PNG
+        staticImg.src = "case_open.png"; // PNG открытого кейса
         staticImg.style.display = "block";
       };
     });
@@ -105,7 +113,7 @@
       video.play();
       video.onended = () => {
         video.style.display = "none";
-        staticImg.src = "sticker_closed.png"; // возвращаем закрытый кейс
+        staticImg.src = "sticker_closed.png"; // закрытый кейс
         staticImg.style.display = "block";
       };
     });
