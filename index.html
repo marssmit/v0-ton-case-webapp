@@ -28,8 +28,8 @@
     .case-container {
       cursor: pointer;
       transition: transform 0.3s ease;
-      aspect-ratio: 1 / 1;
-      width: 100%;
+      width: 120px;  /* Размер для ПК */
+      height: 120px; /* Размер для ПК */
       position: relative;
       overflow: hidden;
       border-radius: 12px;
@@ -55,13 +55,10 @@
       left: 0;
     }
 
+    /* 📱 Медиа-запрос для телефонов */
     @media (max-width: 600px) {
-      .container {
-        max-width: 100%; /* Убираем ограничение ширины */
-      }
-
       .case-container {
-        width: 47vw; /* Занимает почти половину экрана */
+        width: 47vw; /* Увеличенный размер на телефоне */
         height: 47vw;
       }
     }
