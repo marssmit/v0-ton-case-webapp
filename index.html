@@ -32,7 +32,7 @@
       position: relative;
       overflow: hidden;
       border-radius: 12px;
-      background: rgba(255, 255, 255, 0.1); /* Временная заглушка */
+      background: rgba(255, 255, 255, 0.1);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -45,13 +45,29 @@
       transform: scale(1.05);
       filter: drop-shadow(0 0 15px #00ffff);
     }
+
+    .case-container video, .case-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <!-- Заглушки для 8 кейсов -->
-    <div class="case-container">Кейс 1</div>
+    <!-- Первая кейс с анимацией и изображениями -->
+    <div class="case-container" id="animated-case">
+      <video id="case-video" muted playsinline preload="auto" style="display: none;">
+        <source src="case_opening.webm" type="video/webm">
+      </video>
+      <img id="case-static" src="sticker_closed.png" alt="Кейс" />
+    </div>
+
+    <!-- Остальные заглушки -->
     <div class="case-container">Кейс 2</div>
     <div class="case-container">Кейс 3</div>
     <div class="case-container">Кейс 4</div>
@@ -60,6 +76,44 @@
     <div class="case-container">Кейс 7</div>
     <div class="case-container">Кейс 8</div>
   </div>
+
+  <script>
+    const container = document.getElementById("animated-case");
+    const video = document.getElementById("case-video");
+    const staticImg = document.getElementById("case-static");
+
+    container.addEventListener("mouseenter", () => {
+      staticImg.style.display = "none";
+      video.style.display = "block";
+      video.src = "case_opening.webm";
+      video.loop = false;
+      video.currentTime = 0;
+      video.play();
+      video.onended = () => {
+        video.style.display = "none";
+        staticImg.src = "case_open.png"; // открытый кейс PNG
+        staticImg.style.display = "block";
+      };
+    });
+
+    container.addEventListener("mouseleave", () => {
+      staticImg.style.display = "none";
+      video.style.display = "block";
+      video.src = "case_closing.webm";
+      video.loop = false;
+      video.currentTime = 0;
+      video.play();
+      video.onended = () => {
+        video.style.display = "none";
+        staticImg.src = "sticker_closed.png"; // возвращаем закрытый кейс
+        staticImg.style.display = "block";
+      };
+    });
+
+    container.addEventListener("click", () => {
+      window.location.href = "spin.html";
+    });
+  </script>
 
 </body>
 </html>
