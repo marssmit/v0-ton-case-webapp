@@ -28,15 +28,17 @@
       cursor: pointer;
       transition: transform 0.3s ease;
       z-index: 1;
-    }
-
-    #case-container:hover {
-      filter: drop-shadow(0 0 15px #00ffff);
-      transform: scale(1.05);
-    }
-
-    #case-image {
       width: 240px;
+      height: 240px;
+      position: relative;
+    }
+
+    #case-container video, #case-container img {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
   </style>
 </head>
@@ -45,38 +47,38 @@
   <h1>Выбери кейс</h1>
 
   <div id="case-container">
-    <img id="case-image" src="sticker_closed.webp" alt="Кейс" />
+    <video id="case-video" muted playsinline preload="auto">
+      <source src="case_opening.webm" type="video/webm">
+    </video>
+    <img id="case-static" src="sticker_closed.webp" alt="Кейс" />
   </div>
 
   <script>
     const container = document.getElementById("case-container");
-    const image = document.getElementById("case-image");
-
-    let state = "closed"; // возможные значения: 'closed', 'opening', 'open', 'closing'
-    let timer;
+    const video = document.getElementById("case-video");
+    const staticImg = document.getElementById("case-static");
 
     container.addEventListener("mouseenter", () => {
-      if (state === "closed" || state === "closing") {
-        clearTimeout(timer);
-        image.src = "case_opening.gif";
-        state = "opening";
-        timer = setTimeout(() => {
-          image.src = "case_open.webp";
-          state = "open";
-        }, 1500);
-      }
+      staticImg.style.display = "none";
+      video.src = "case_opening.webm";
+      video.loop = false;
+      video.currentTime = 0;
+      video.play();
+      video.onended = () => {
+        video.src = "case_open.webm"; // После открытия оставляем открытое видео
+        video.loop = true;
+        video.play();
+      };
     });
 
     container.addEventListener("mouseleave", () => {
-      if (state === "open" || state === "opening") {
-        clearTimeout(timer);
-        image.src = "case_closing.gif";
-        state = "closing";
-        timer = setTimeout(() => {
-          image.src = "sticker_closed.webp";
-          state = "closed";
-        }, 1500);
-      }
+      video.src = "case_closing.webm";
+      video.loop = false;
+      video.currentTime = 0;
+      video.play();
+      video.onended = () => {
+        staticImg.style.display = "block";
+      };
     });
 
     container.addEventListener("click", () => {
