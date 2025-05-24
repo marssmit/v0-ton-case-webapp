@@ -19,16 +19,16 @@
 
     .container {
       display: grid;
-      grid-template-columns: repeat(2, auto);
+      grid-template-columns: repeat(2, 1fr);
       gap: 15px;
-      max-width: 600px; /* Ограничение ширины для ПК */
       width: 100%;
+      max-width: 600px; /* Ограничение для ПК */
     }
 
     .case-container {
       cursor: pointer;
       transition: transform 0.3s ease;
-      width: 120px;  /* Базовый размер для ПК */
+      width: 120px;
       height: 120px;
       position: relative;
       overflow: hidden;
@@ -62,8 +62,8 @@
       }
 
       .case-container {
-        width: 47vw;
-        height: 47vw;
+        width: 45vw;
+        height: 45vw;
       }
     }
   </style>
@@ -71,6 +71,7 @@
 <body>
 
   <div class="container">
+    <!-- Анимированный кейс -->
     <div class="case-container" id="animated-case">
       <video id="case-video" muted playsinline preload="auto" style="display: none;">
         <source src="case_opening.webm" type="video/webm">
@@ -78,9 +79,53 @@
       <img id="case-static" src="sticker_closed.png" alt="Кейс" />
     </div>
 
+    <!-- Заглушки -->
     <div class="case-container">Кейс 2</div>
     <div class="case-container">Кейс 3</div>
     <div class="case-container">Кейс 4</div>
     <div class="case-container">Кейс 5</div>
     <div class="case-container">Кейс 6</div>
     <div class="case-container">Кейс 7</div>
+    <div class="case-container">Кейс 8</div>
+  </div>
+
+  <script>
+    const container = document.getElementById("animated-case");
+    const video = document.getElementById("case-video");
+    const staticImg = document.getElementById("case-static");
+
+    container.addEventListener("mouseenter", () => {
+      staticImg.style.display = "none";
+      video.style.display = "block";
+      video.src = "case_opening.webm";
+      video.loop = false;
+      video.currentTime = 0;
+      video.play();
+      video.onended = () => {
+        video.style.display = "none";
+        staticImg.src = "case_open.png";
+        staticImg.style.display = "block";
+      };
+    });
+
+    container.addEventListener("mouseleave", () => {
+      staticImg.style.display = "none";
+      video.style.display = "block";
+      video.src = "case_closing.webm";
+      video.loop = false;
+      video.currentTime = 0;
+      video.play();
+      video.onended = () => {
+        video.style.display = "none";
+        staticImg.src = "sticker_closed.png";
+        staticImg.style.display = "block";
+      };
+    });
+
+    container.addEventListener("click", () => {
+      window.location.href = "spin.html";
+    });
+  </script>
+
+</body>
+</html>
