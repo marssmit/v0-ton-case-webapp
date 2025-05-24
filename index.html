@@ -28,17 +28,17 @@
       cursor: pointer;
       transition: transform 0.3s ease;
       z-index: 1;
-      width: 240px; /* Фиксированный размер */
+      width: 240px;
       height: 240px;
       position: relative;
-      overflow: hidden; /* Обрезаем лишнее */
-      border-radius: 12px; /* (по желанию) скругление */
+      overflow: hidden;
+      border-radius: 12px;
     }
 
     #case-container video, #case-container img {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* или cover, если нужно обрезать */
+      object-fit: contain;
       position: absolute;
       top: 0;
       left: 0;
@@ -53,7 +53,7 @@
     <video id="case-video" muted playsinline preload="auto" style="display: none;">
       <source src="case_opening.webm" type="video/webm">
     </video>
-    <img id="case-static" src="sticker_closed.webp" alt="Кейс" />
+    <img id="case-static" src="sticker_closed.png" alt="Кейс" />
   </div>
 
   <script>
@@ -69,19 +69,22 @@
       video.currentTime = 0;
       video.play();
       video.onended = () => {
-        video.src = "case_open.webm";
-        video.loop = true;
-        video.play();
+        video.style.display = "none";
+        staticImg.src = "case_open.png"; // открытый кейс PNG
+        staticImg.style.display = "block";
       };
     });
 
     container.addEventListener("mouseleave", () => {
+      staticImg.style.display = "none";
+      video.style.display = "block";
       video.src = "case_closing.webm";
       video.loop = false;
       video.currentTime = 0;
       video.play();
       video.onended = () => {
         video.style.display = "none";
+        staticImg.src = "sticker_closed.png"; // закрытый кейс PNG
         staticImg.style.display = "block";
       };
     });
