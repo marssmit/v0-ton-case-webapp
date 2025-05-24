@@ -8,26 +8,27 @@
       margin: 0;
       font-family: sans-serif;
       color: white;
-      background: url('your_background_with_stars.png') no-repeat center center fixed;
+      background: url('stars_background.gif') no-repeat center center fixed;
       background-size: cover;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
     .container {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 15px;
+      width: 90%;
+      max-width: 600px;
     }
 
     .case-container {
       cursor: pointer;
       transition: transform 0.3s ease;
-      z-index: 1;
-      width: 120px; /* Базовый размер для ПК */
+      width: 120px;
       height: 120px;
       position: relative;
       overflow: hidden;
@@ -36,7 +37,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      color: white;
       font-weight: bold;
       text-shadow: 0 0 10px black;
     }
@@ -55,10 +55,9 @@
       left: 0;
     }
 
-    /* 📱 Адаптивная вёрстка для телефонов */
     @media (max-width: 600px) {
       .case-container {
-        width: 30vw; /* 30% ширины экрана */
+        width: 30vw;
         height: 30vw;
       }
     }
@@ -67,7 +66,7 @@
 <body>
 
   <div class="container">
-    <!-- Первая кейс с анимацией и изображениями -->
+    <!-- Первый кейс с анимацией -->
     <div class="case-container" id="animated-case">
       <video id="case-video" muted playsinline preload="auto" style="display: none;">
         <source src="case_opening.webm" type="video/webm">
