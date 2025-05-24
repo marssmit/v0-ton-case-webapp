@@ -45,22 +45,29 @@
   <h1>Выбери кейс</h1>
 
   <div id="case-container">
-    <img id="case-image" src="sticker_closed.gif" alt="Кейс" />
+    <img id="case-image" src="sticker_closed.webp" alt="Кейс" />
   </div>
 
   <script>
     const container = document.getElementById("case-container");
     const image = document.getElementById("case-image");
 
+    let openTimeout, closeTimeout;
+
     container.addEventListener("mouseover", () => {
-      image.src = "case_opening.gif";
+      clearTimeout(closeTimeout);
+      image.src = "case_opening.gif"; // Анимация открытия кейса
+      openTimeout = setTimeout(() => {
+        image.src = "case_open.webp"; // Статичное открытое состояние
+      }, 1500); // Длительность case_opening.gif
     });
 
     container.addEventListener("mouseout", () => {
-      image.src = "case_closing.gif";
-      setTimeout(() => {
-        image.src = "sticker_closed.gif";
-      }, 1500); // Время анимации закрытия кейса
+      clearTimeout(openTimeout);
+      image.src = "case_closing.gif"; // Анимация закрытия кейса
+      closeTimeout = setTimeout(() => {
+        image.src = "sticker_closed.webp"; // Возврат к закрытому кейсу
+      }, 1500); // Длительность case_closing.gif
     });
 
     container.addEventListener("click", () => {
