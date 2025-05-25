@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>TON CASE — Спин</title>
   <style>
     body {
@@ -14,48 +14,58 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px;
-      min-height: 100vh;
+      padding: 10px;
+      height: 100vh;
       box-sizing: border-box;
+      overflow: hidden; /* Убираем скроллы у body */
     }
 
     h1 {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       text-shadow: 0 0 10px #00ffff;
+      font-size: 24px;
     }
 
     #nft-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
       width: 100%;
       max-width: 300px;
-      max-height: 80vh;
-      overflow-y: auto;
-      border: 2px solid #00f0ff;
-      border-radius: 10px;
-      background: rgba(0, 0, 0, 0.5);
+      height: 60vh; /* Компактная высота */
+      overflow-y: scroll;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none;  /* IE 10+ */
+      background: rgba(0, 0, 0, 0.4);
       padding: 10px;
       box-sizing: border-box;
     }
 
+    #nft-list::-webkit-scrollbar {
+      display: none; /* Chrome, Safari */
+    }
+
     .nft-item {
-      width: 200px; /* На ПК */
+      width: 200px;
       height: 200px;
-      margin: 10px auto;
+      margin: 0 auto;
       background-size: cover;
       background-position: center;
       border-radius: 12px;
-      border: 2px solid #333;
       box-shadow: 0 0 10px rgba(0,240,255,0.3);
     }
 
     #fortune-btn {
-      padding: 15px 30px;
+      padding: 15px 0;
       font-size: 20px;
       background-color: #00f0ff;
       color: black;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      margin-top: 20px;
+      margin-top: 10px;
+      width: 90%;
+      max-width: 400px;
       transition: background-color 0.3s;
     }
 
@@ -95,27 +105,28 @@
     }
 
     @media (max-width: 600px) {
-      #nft-list {
-        max-width: 90vw;
-      }
-
       .nft-item {
         width: 45vw;
         height: 45vw;
       }
 
+      #nft-list {
+        max-width: 90vw;
+        height: 60vh;
+      }
+
       #fortune-btn {
         font-size: 22px;
-        padding: 20px 40px;
+        padding: 20px 0;
       }
     }
   </style>
 </head>
 <body>
-  <h1 id="case-title">Открытие кейса</h1>
+  <h1 id="case-title"></h1>
 
   <div id="nft-list">
-    <!-- NFT динамически добавятся -->
+    <!-- NFT добавятся сюда -->
   </div>
 
   <button id="fortune-btn">Испытать фортуну</button>
@@ -128,6 +139,10 @@
   </div>
 
   <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const caseName = urlParams.get('case') || 'egg_case';
+    document.getElementById("case-title").textContent = `Кейс: ${caseName}`;
+
     const nftList = document.getElementById("nft-list");
     const nftImages = [
       { src: "nft1.png", name: "NFT 1", rarity: "common" },
@@ -159,11 +174,8 @@
       const prize = getRandomNFT();
       const items = Array.from(nftList.children);
       const index = items.findIndex(item => item.style.backgroundImage.includes(prize.src));
-      const prizeItem = items[index];
-      if (prizeItem) {
-        const scrollTo = prizeItem.offsetTop - nftList.clientHeight / 2 + prizeItem.clientHeight / 2;
-        nftList.scrollTo({ top: scrollTo, behavior: "smooth" });
-      }
+      const scrollTo = items[index].offsetTop - nftList.clientHeight / 2 + items[index].clientHeight / 2;
+      nftList.scrollTo({ top: scrollTo, behavior: "smooth" });
 
       setTimeout(() => {
         document.getElementById("prize-image").src = prize.src;
