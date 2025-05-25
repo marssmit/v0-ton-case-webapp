@@ -45,7 +45,7 @@
     }
 
     .nft-item {
-      aspect-ratio: 1 / 1; /* Делаем квадраты на всех устройствах */
+      aspect-ratio: 1 / 1; /* Квадратные заглушки */
       width: 200px; /* Базовый размер на ПК */
       background-size: cover;
       background-position: center;
@@ -104,8 +104,19 @@
     }
 
     @media (max-width: 600px) {
+      #nft-list {
+        max-width: 95vw;
+        height: 75vh; /* Больше места для крупных карточек */
+      }
+
       .nft-item {
-        width: 45vw;
+        width: 80vw;  /* Крупные заглушки на телефоне */
+        aspect-ratio: 1/1;
+      }
+
+      #fortune-btn {
+        font-size: 22px;
+        padding: 20px 0;
       }
     }
   </style>
@@ -114,7 +125,7 @@
   <h1 id="case-title"></h1>
 
   <div id="nft-list">
-    <!-- NFT добавятся сюда -->
+    <!-- NFT заглушки добавятся динамически -->
   </div>
 
   <button id="fortune-btn">Испытать фортуну</button>
@@ -143,7 +154,6 @@
       { src: "nft8.png", name: "NFT 8", rarity: "common" }
     ];
 
-    // Загружаем NFT
     nftImages.forEach(nft => {
       const item = document.createElement("div");
       item.className = "nft-item";
@@ -163,7 +173,6 @@
       const prize = getRandomNFT();
       const items = Array.from(nftList.children);
       const index = items.findIndex(item => item.style.backgroundImage.includes(prize.src));
-
       if (index !== -1) {
         const prizeItem = items[index];
         const scrollTo = prizeItem.offsetTop;
