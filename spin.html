@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>TON CASE — Спин</title>
   <style>
     body {
@@ -16,6 +16,7 @@
       align-items: center;
       padding: 20px;
       min-height: 100vh;
+      box-sizing: border-box;
     }
 
     h1 {
@@ -24,18 +25,19 @@
     }
 
     #nft-list {
-      display: block;
-      width: 250px;
-      height: 80vh;
-      overflow-y: scroll;
+      width: 100%;
+      max-width: 300px;
+      max-height: 80vh;
+      overflow-y: auto;
       border: 2px solid #00f0ff;
       border-radius: 10px;
       background: rgba(0, 0, 0, 0.5);
       padding: 10px;
+      box-sizing: border-box;
     }
 
     .nft-item {
-      width: 200px;
+      width: 200px; /* На ПК */
       height: 200px;
       margin: 10px auto;
       background-size: cover;
@@ -94,7 +96,7 @@
 
     @media (max-width: 600px) {
       #nft-list {
-        width: 90vw;
+        max-width: 90vw;
       }
 
       .nft-item {
@@ -113,7 +115,7 @@
   <h1 id="case-title">Открытие кейса</h1>
 
   <div id="nft-list">
-    <!-- NFT будут динамически добавлены -->
+    <!-- NFT динамически добавятся -->
   </div>
 
   <button id="fortune-btn">Испытать фортуну</button>
@@ -138,7 +140,6 @@
       { src: "nft8.png", name: "NFT 8", rarity: "common" }
     ];
 
-    // Добавляем элементы в ленту
     nftImages.forEach(nft => {
       const item = document.createElement("div");
       item.className = "nft-item";
@@ -158,8 +159,11 @@
       const prize = getRandomNFT();
       const items = Array.from(nftList.children);
       const index = items.findIndex(item => item.style.backgroundImage.includes(prize.src));
-      const scrollTo = items[index].offsetTop - nftList.clientHeight / 2 + items[index].clientHeight / 2;
-      nftList.scrollTo({ top: scrollTo, behavior: "smooth" });
+      const prizeItem = items[index];
+      if (prizeItem) {
+        const scrollTo = prizeItem.offsetTop - nftList.clientHeight / 2 + prizeItem.clientHeight / 2;
+        nftList.scrollTo({ top: scrollTo, behavior: "smooth" });
+      }
 
       setTimeout(() => {
         document.getElementById("prize-image").src = prize.src;
