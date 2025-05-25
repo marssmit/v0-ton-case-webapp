@@ -10,63 +10,62 @@
       background-size: cover;
       font-family: sans-serif;
       color: white;
-      text-align: center;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      padding: 10px;
-      height: 100vh;
-      box-sizing: border-box;
-      overflow: hidden;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    h1 {
-      margin-bottom: 10px;
-      text-shadow: 0 0 10px #00ffff;
-      font-size: 24px;
-    }
-
-    #nft-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      width: auto;
-      height: 60vh;
+    .container {
+      display: grid;
+      grid-template-columns: 1fr; /* Одна колонка для вертикальной ленты */
+      gap: 15px;
+      width: 100%;
+      max-width: 800px; /* Как на странице с боксами */
+      height: 70vh;
       overflow-y: auto;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 12px;
+      box-sizing: border-box;
       scrollbar-width: none;
       -ms-overflow-style: none;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 10px;
-      box-sizing: border-box;
     }
 
-    #nft-list::-webkit-scrollbar {
+    .container::-webkit-scrollbar {
       display: none;
     }
 
-    /* Заглушки для ПК */
     .nft-item {
-      width: 250px;
-      height: 250px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
       background-size: cover;
       background-position: center;
-      border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,240,255,0.3);
-      margin: 0 auto;
+    }
+
+    .nft-item:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 15px #00ffff);
     }
 
     #fortune-btn {
-      padding: 20px 0;
+      padding: 20px;
       font-size: 20px;
       background-color: #00f0ff;
       color: black;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      margin-top: 10px;
       width: 90%;
       max-width: 400px;
-      transition: background-color 0.3s;
+      margin-top: 10px;
     }
 
     #fortune-btn:hover {
@@ -104,31 +103,28 @@
       cursor: pointer;
     }
 
-    /* Только для телефонов (max-width 600px) */
     @media (max-width: 600px) {
+      .container {
+        max-width: 100%;
+        padding: 0 10px;
+      }
+
       .nft-item {
-        width: 90vw;  /* Заглушки шириной 90% экрана */
-        height: 90vw; /* Высота равна ширине для квадрата */
+        width: 100%;
       }
 
       #fortune-btn {
-        width: 100%;      /* На всю ширину */
-        font-size: 26px;  /* Крупный текст */
-        padding: 25px 0;  /* Большая кнопка */
-      }
-
-      #nft-list {
         width: 100%;
-        height: 70vh;
+        font-size: 26px;
+        padding: 25px;
       }
     }
   </style>
 </head>
 <body>
-  <h1 id="case-title"></h1>
 
-  <div id="nft-list">
-    <!-- Заглушки -->
+  <div class="container" id="nft-list">
+    <!-- NFT заглушки добавятся динамически -->
   </div>
 
   <button id="fortune-btn">Испытать фортуну</button>
@@ -141,10 +137,6 @@
   </div>
 
   <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const caseName = urlParams.get('case') || 'egg_case';
-    document.getElementById("case-title").textContent = `Кейс: ${caseName}`;
-
     const nftList = document.getElementById("nft-list");
     const nftImages = [
       { src: "nft1.png", name: "NFT 1", rarity: "common" },
@@ -178,8 +170,7 @@
       const index = items.findIndex(item => item.style.backgroundImage.includes(prize.src));
       if (index !== -1) {
         const prizeItem = items[index];
-        const scrollTo = prizeItem.offsetTop;
-        nftList.scrollTo({ top: scrollTo, behavior: "smooth" });
+        nftList.scrollTo({ top: prizeItem.offsetTop, behavior: "smooth" });
       }
 
       setTimeout(() => {
@@ -194,5 +185,6 @@
       document.getElementById("result-modal").style.display = "none";
     });
   </script>
+
 </body>
 </html>
