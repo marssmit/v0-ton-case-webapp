@@ -26,9 +26,9 @@
 
     #nft-list {
       display: flex;
-      flex-direction: column;
+      flex-direction: column; /* Вертикальная лента */
       gap: 15px;
-      width: 100%;
+      width: auto;
       max-height: 80vh;
       overflow-y: auto;
       padding: 10px;
@@ -38,7 +38,8 @@
     }
 
     .nft-item {
-      width: 200px; /* Крупный размер как на экране кейсов */
+      flex: 0 0 auto;
+      width: 200px; /* На ПК */
       height: 200px;
       background-size: cover;
       background-position: center;
@@ -97,12 +98,12 @@
 
     @media (max-width: 600px) {
       .nft-item {
-        width: 45vw; /* Размеры как на кейсах */
+        width: 45vw;
         height: 45vw;
       }
 
       #nft-list {
-        max-height: 80vh;
+        width: 90vw;
       }
 
       #fortune-btn {
@@ -116,7 +117,7 @@
   <h1 id="case-title">Открытие кейса</h1>
 
   <div id="nft-list">
-    <!-- NFT будут добавлены динамически -->
+    <!-- NFT динамически добавятся -->
   </div>
 
   <button id="fortune-btn">Испытать фортуну</button>
