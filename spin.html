@@ -16,7 +16,6 @@
       align-items: center;
       padding: 20px;
       min-height: 100vh;
-      box-sizing: border-box;
     }
 
     h1 {
@@ -25,28 +24,25 @@
     }
 
     #nft-list {
-      display: flex;
-      flex-direction: column; /* Вертикальная лента */
-      gap: 15px;
-      width: auto;
-      max-height: 80vh;
-      overflow-y: auto;
-      padding: 10px;
+      display: block;
+      width: 250px;
+      height: 80vh;
+      overflow-y: scroll;
       border: 2px solid #00f0ff;
       border-radius: 10px;
       background: rgba(0, 0, 0, 0.5);
+      padding: 10px;
     }
 
     .nft-item {
-      flex: 0 0 auto;
-      width: 200px; /* На ПК */
+      width: 200px;
       height: 200px;
+      margin: 10px auto;
       background-size: cover;
       background-position: center;
       border-radius: 12px;
       border: 2px solid #333;
       box-shadow: 0 0 10px rgba(0,240,255,0.3);
-      margin: 0 auto;
     }
 
     #fortune-btn {
@@ -97,13 +93,13 @@
     }
 
     @media (max-width: 600px) {
+      #nft-list {
+        width: 90vw;
+      }
+
       .nft-item {
         width: 45vw;
         height: 45vw;
-      }
-
-      #nft-list {
-        width: 90vw;
       }
 
       #fortune-btn {
@@ -117,7 +113,7 @@
   <h1 id="case-title">Открытие кейса</h1>
 
   <div id="nft-list">
-    <!-- NFT динамически добавятся -->
+    <!-- NFT будут динамически добавлены -->
   </div>
 
   <button id="fortune-btn">Испытать фортуну</button>
@@ -142,6 +138,7 @@
       { src: "nft8.png", name: "NFT 8", rarity: "common" }
     ];
 
+    // Добавляем элементы в ленту
     nftImages.forEach(nft => {
       const item = document.createElement("div");
       item.className = "nft-item";
