@@ -6,7 +6,7 @@
   <style>
     body {
       margin: 0;
-      background: url('stars_background.gif') no-repeat center center fixed; /* Звездный фон */
+      background: url('stars_background.gif') no-repeat center center fixed; /* Фон со звездами */
       background-size: cover;
       color: white;
       font-family: sans-serif;
@@ -16,13 +16,12 @@
 
     h1 {
       margin-top: 20px;
-      text-shadow: 0 0 10px #00ffff;
     }
 
     #nft-list {
       position: relative;
-      height: 500px; /* Базовая высота */
-      width: 150px;  /* Увеличенная ширина */
+      height: 500px;
+      width: 120px;
       margin: 20px auto;
       overflow: hidden;
       border: 2px solid #00f0ff;
@@ -30,20 +29,14 @@
     }
 
     .nft-item {
-      height: 120px;  /* Увеличенные размеры */
-      width: 120px;
+      height: 100px;
+      width: 100px;
       margin: 10px auto;
       background-size: cover;
       background-position: center;
       border-radius: 8px;
       border: 2px solid #333;
       box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
-      animation: spin 2s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-200%); }
     }
 
     #fortune-btn {
@@ -61,18 +54,16 @@
       background: #00c0cc;
     }
 
-    /* 📱 Увеличение размеров на телефоне */
+    /* Увеличение размеров на телефоне */
     @media (max-width: 600px) {
       #nft-list {
-        width: 90vw;  /* Ширина почти всего экрана */
-        height: 80vh; /* Высота почти всего экрана */
+        width: 90vw;
+        height: 80vh;
       }
-
       .nft-item {
         width: 40vw;
         height: 40vw;
       }
-
       #fortune-btn {
         font-size: 20px;
         padding: 20px 40px;
@@ -84,13 +75,12 @@
   <h1 id="case-title">Открытие кейса</h1>
 
   <div id="nft-list">
-    <!-- Сюда добавятся NFT динамически -->
+    <!-- NFT добавятся динамически -->
   </div>
 
   <button id="fortune-btn">Испытать фортуну</button>
 
   <script>
-    // Получаем параметр из URL (например, ?case=egg_case)
     const urlParams = new URLSearchParams(window.location.search);
     const caseName = urlParams.get('case') || 'egg_case';
     document.getElementById('case-title').innerText = `Кейс: ${caseName}`;
@@ -107,17 +97,19 @@
       "nft8.png"
     ];
 
-    // Загружаем NFT
-    nftImages.forEach(src => {
-      const item = document.createElement("div");
-      item.className = "nft-item";
-      item.style.backgroundImage = `url(${src})`;
-      nftList.appendChild(item);
-    });
+    // Изначально пусто
+    nftList.innerHTML = '';
 
     document.getElementById("fortune-btn").addEventListener("click", () => {
+      nftList.innerHTML = ''; // Очищаем ленту
+      const shuffled = nftImages.sort(() => 0.5 - Math.random()); // Перемешиваем
+      shuffled.slice(0, 10).forEach(src => {
+        const item = document.createElement("div");
+        item.className = "nft-item";
+        item.style.backgroundImage = `url(${src})`;
+        nftList.appendChild(item);
+      });
       alert("Поздравляем! Вам выпал подарок!");
-      // Можно добавить переход на экран выигрыша
       // window.location.href = "win.html?prize=...";
     });
   </script>
