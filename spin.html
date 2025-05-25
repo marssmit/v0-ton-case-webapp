@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>TON CASE — Спин</title>
   <style>
     body {
@@ -32,7 +32,7 @@
       gap: 10px;
       width: auto;
       height: 60vh;
-      overflow-y: scroll;
+      overflow-y: auto;
       scrollbar-width: none; /* Firefox */
       -ms-overflow-style: none;  /* IE 10+ */
       background: rgba(0, 0, 0, 0.4);
@@ -45,13 +45,13 @@
     }
 
     .nft-item {
-      width: 150px; /* Квадратные заглушки */
-      height: 150px;
-      margin: 0 auto;
+      aspect-ratio: 1 / 1; /* Делаем квадраты на всех устройствах */
+      width: 200px; /* Базовый размер на ПК */
       background-size: cover;
       background-position: center;
       border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,240,255,0.3);
+      margin: 0 auto;
     }
 
     #fortune-btn {
@@ -104,18 +104,8 @@
     }
 
     @media (max-width: 600px) {
-      #nft-list {
-        max-width: 90vw;
-      }
-
       .nft-item {
-        width: 45vw; /* Квадратные, но крупнее на телефоне */
-        height: 45vw;
-      }
-
-      #fortune-btn {
-        font-size: 22px;
-        padding: 20px 0;
+        width: 45vw;
       }
     }
   </style>
@@ -153,7 +143,7 @@
       { src: "nft8.png", name: "NFT 8", rarity: "common" }
     ];
 
-    // Добавляем элементы в ленту
+    // Загружаем NFT
     nftImages.forEach(nft => {
       const item = document.createElement("div");
       item.className = "nft-item";
@@ -173,8 +163,10 @@
       const prize = getRandomNFT();
       const items = Array.from(nftList.children);
       const index = items.findIndex(item => item.style.backgroundImage.includes(prize.src));
+
       if (index !== -1) {
-        const scrollTo = items[index].offsetTop - nftList.clientHeight / 2 + items[index].clientHeight / 2;
+        const prizeItem = items[index];
+        const scrollTo = prizeItem.offsetTop;
         nftList.scrollTo({ top: scrollTo, behavior: "smooth" });
       }
 
