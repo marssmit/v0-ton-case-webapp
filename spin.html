@@ -17,7 +17,7 @@
       padding: 10px;
       height: 100vh;
       box-sizing: border-box;
-      overflow: hidden; /* Убираем скроллы у body */
+      overflow: hidden;
     }
 
     h1 {
@@ -30,9 +30,8 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      width: 100%;
-      max-width: 300px;
-      height: 60vh; /* Компактная высота */
+      width: auto;
+      height: 60vh;
       overflow-y: scroll;
       scrollbar-width: none; /* Firefox */
       -ms-overflow-style: none;  /* IE 10+ */
@@ -46,8 +45,8 @@
     }
 
     .nft-item {
-      width: 200px;
-      height: 200px;
+      width: 150px; /* Квадратные заглушки */
+      height: 150px;
       margin: 0 auto;
       background-size: cover;
       background-position: center;
@@ -105,14 +104,13 @@
     }
 
     @media (max-width: 600px) {
-      .nft-item {
-        width: 45vw;
-        height: 45vw;
-      }
-
       #nft-list {
         max-width: 90vw;
-        height: 60vh;
+      }
+
+      .nft-item {
+        width: 45vw; /* Квадратные, но крупнее на телефоне */
+        height: 45vw;
       }
 
       #fortune-btn {
@@ -155,6 +153,7 @@
       { src: "nft8.png", name: "NFT 8", rarity: "common" }
     ];
 
+    // Добавляем элементы в ленту
     nftImages.forEach(nft => {
       const item = document.createElement("div");
       item.className = "nft-item";
@@ -174,8 +173,10 @@
       const prize = getRandomNFT();
       const items = Array.from(nftList.children);
       const index = items.findIndex(item => item.style.backgroundImage.includes(prize.src));
-      const scrollTo = items[index].offsetTop - nftList.clientHeight / 2 + items[index].clientHeight / 2;
-      nftList.scrollTo({ top: scrollTo, behavior: "smooth" });
+      if (index !== -1) {
+        const scrollTo = items[index].offsetTop - nftList.clientHeight / 2 + items[index].clientHeight / 2;
+        nftList.scrollTo({ top: scrollTo, behavior: "smooth" });
+      }
 
       setTimeout(() => {
         document.getElementById("prize-image").src = prize.src;
