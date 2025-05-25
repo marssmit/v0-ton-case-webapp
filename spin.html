@@ -12,10 +12,11 @@
       background-size: cover;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       min-height: 100vh;
       padding: 20px;
+      box-sizing: border-box;
     }
 
     h1 {
@@ -31,9 +32,11 @@
       overflow-x: auto;
       gap: 20px;
       width: 90%;
+      max-width: 800px;
       padding: 20px;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 12px;
+      box-sizing: border-box;
     }
 
     .nft-item {
@@ -45,25 +48,26 @@
       align-items: center;
       border-radius: 12px;
       font-size: 18px;
+      text-align: center;
     }
 
     @media (max-width: 600px) {
       .spin-container {
-        flex-direction: column; /* Вертикальная лента на телефоне */
+        flex-direction: column;
         overflow-x: hidden;
         overflow-y: auto;
       }
 
       .nft-item {
-        min-width: 80vw; /* Большие NFT на телефоне */
+        min-width: 80vw;
         min-height: 80vw;
       }
     }
 
     .spin-button {
       margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 18px;
+      padding: 12px 24px;
+      font-size: 20px;
       background-color: #00ffff;
       color: black;
       border: none;
@@ -89,7 +93,16 @@
     <div class="nft-item">NFT 5</div>
   </div>
 
-  <button class="spin-button">Испытать удачу</button>
+  <!-- Кнопка всегда под лентой -->
+  <button class="spin-button" onclick="tryLuck()">Испытать удачу</button>
+
+  <script>
+    function tryLuck() {
+      alert("Удача испытана! (Можно заменить на переход на выигрышную страницу)");
+      // Например:
+      // window.location.href = "win.html";
+    }
+  </script>
 
 </body>
 </html>
