@@ -8,43 +8,78 @@
       margin: 0;
       font-family: sans-serif;
       color: white;
-      background: black;
+      background: url('stars_background.gif') no-repeat center center fixed;
+      background-size: cover;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 24px;
+      text-shadow: 0 0 10px #00ffff;
+      margin-bottom: 20px;
     }
 
     .spin-container {
       display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
       overflow-x: auto;
       gap: 20px;
-      width: 95vw; /* Почти вся ширина экрана */
+      width: 90%;
       padding: 20px;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 12px;
     }
 
     .nft-item {
-      min-width: 120px; /* Минимальная ширина для ПК */
+      min-width: 120px;
       min-height: 120px;
       background: #222;
       display: flex;
       justify-content: center;
       align-items: center;
       border-radius: 12px;
-      color: white;
+      font-size: 18px;
     }
 
     @media (max-width: 600px) {
-      .nft-item {
-        min-width: 45vw; /* Увеличенные NFT на телефоне */
-        min-height: 45vw;
+      .spin-container {
+        flex-direction: column; /* Вертикальная лента на телефоне */
+        overflow-x: hidden;
+        overflow-y: auto;
       }
+
+      .nft-item {
+        min-width: 80vw; /* Большие NFT на телефоне */
+        min-height: 80vw;
+      }
+    }
+
+    .spin-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #00ffff;
+      color: black;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .spin-button:hover {
+      background-color: #00cccc;
     }
   </style>
 </head>
 <body>
+
+  <h1>Ваша лента NFT</h1>
 
   <div class="spin-container">
     <div class="nft-item">NFT 1</div>
@@ -53,6 +88,8 @@
     <div class="nft-item">NFT 4</div>
     <div class="nft-item">NFT 5</div>
   </div>
+
+  <button class="spin-button">Испытать удачу</button>
 
 </body>
 </html>
