@@ -33,20 +33,20 @@
       width: auto;
       height: 60vh;
       overflow-y: auto;
-      scrollbar-width: none; /* Firefox */
-      -ms-overflow-style: none;  /* IE 10+ */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
       background: rgba(0, 0, 0, 0.4);
       padding: 10px;
       box-sizing: border-box;
     }
 
     #nft-list::-webkit-scrollbar {
-      display: none; /* Chrome, Safari */
+      display: none;
     }
 
     .nft-item {
       aspect-ratio: 1 / 1;
-      width: 250px; /* Размер на ПК */
+      width: 250px;
       background-size: cover;
       background-position: center;
       border-radius: 12px;
@@ -56,7 +56,7 @@
 
     #fortune-btn {
       padding: 20px 0;
-      font-size: 20px; /* Размер текста на ПК */
+      font-size: 20px;
       background-color: #00f0ff;
       color: black;
       border: none;
@@ -106,16 +106,16 @@
     @media (max-width: 600px) {
       #nft-list {
         width: 100%;
-        height: 65vh;
+        height: 70vh;
       }
 
       .nft-item {
-        width: 90vw; /* Больше только на телефоне */
+        width: 95vw; /* Очень большие заглушки */
       }
 
       #fortune-btn {
-        font-size: 26px; /* Крупный текст */
-        padding: 25px 0;
+        font-size: 30px; /* Очень крупный текст */
+        padding: 30px 0; /* Большая кнопка */
         width: 100%; /* На всю ширину */
       }
     }
