@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>TON CASE — Спин</title>
   <style>
     body {
@@ -44,9 +44,10 @@
       display: none;
     }
 
+    /* Заглушки для ПК */
     .nft-item {
-      width: 250px;   /* ПК размер */
-      height: 250px;  /* ПК размер */
+      width: 250px;
+      height: 250px;
       background-size: cover;
       background-position: center;
       border-radius: 12px;
@@ -106,19 +107,19 @@
     /* Только для телефонов (max-width 600px) */
     @media (max-width: 600px) {
       .nft-item {
-        width: 120vw; /* 120% ширины экрана */
-        height: 120vw; /* Квадратные */
+        width: 90vw;  /* Заглушки шириной 90% экрана */
+        height: 90vw; /* Высота равна ширине для квадрата */
       }
 
       #fortune-btn {
-        width: 100%;    /* На всю ширину */
-        font-size: 30px;/* Крупный текст */
-        padding: 30px 0;/* Больше кнопка */
+        width: 100%;      /* На всю ширину */
+        font-size: 26px;  /* Крупный текст */
+        padding: 25px 0;  /* Большая кнопка */
       }
 
       #nft-list {
-        height: 70vh;
         width: 100%;
+        height: 70vh;
       }
     }
   </style>
@@ -127,7 +128,7 @@
   <h1 id="case-title"></h1>
 
   <div id="nft-list">
-    <!-- Заглушки добавятся здесь -->
+    <!-- Заглушки -->
   </div>
 
   <button id="fortune-btn">Испытать фортуну</button>
