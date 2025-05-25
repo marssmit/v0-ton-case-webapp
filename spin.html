@@ -15,9 +15,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
       flex-direction: column;
+      min-height: 100vh;
       padding: 20px;
+      box-sizing: border-box;
     }
 
     h1 {
@@ -39,8 +40,8 @@
     }
 
     .nft-item {
-      width: 120px;
-      height: 120px;
+      width: 150px; /* Увеличенный размер для ПК */
+      height: 150px;
       background-size: cover;
       background-position: center;
       border-radius: 8px;
@@ -54,7 +55,7 @@
       background: #00f0ff;
       border: none;
       border-radius: 8px;
-      font-size: 18px;
+      font-size: 20px;
       cursor: pointer;
       margin-top: 20px;
       transition: background 0.3s;
@@ -97,18 +98,18 @@
 
     @media (max-width: 600px) {
       #nft-list {
-        grid-template-rows: repeat(auto-fit, minmax(40vw, 1fr));
+        grid-template-rows: repeat(auto-fit, minmax(45vw, 1fr)); /* Увеличение на телефоне */
         max-height: 80vh;
       }
 
       .nft-item {
-        width: 40vw;
-        height: 40vw;
+        width: 45vw; /* Ещё больше на телефоне */
+        height: 45vw;
       }
 
       #fortune-btn {
-        font-size: 20px;
-        padding: 20px 40px;
+        font-size: 22px;
+        padding: 20px 50px;
       }
     }
   </style>
