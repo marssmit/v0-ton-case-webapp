@@ -45,8 +45,8 @@
     }
 
     .nft-item {
-      aspect-ratio: 1 / 1; /* Квадратные */
-      width: 250px; /* Большие на всех устройствах */
+      aspect-ratio: 1 / 1;
+      width: 250px;
       background-size: cover;
       background-position: center;
       border-radius: 12px;
@@ -55,16 +55,16 @@
     }
 
     #fortune-btn {
-      padding: 15px 0;
-      font-size: 22px;
+      padding: 20px 0;
+      font-size: 24px;
       background-color: #00f0ff;
       color: black;
       border: none;
       border-radius: 8px;
       cursor: pointer;
       margin-top: 10px;
-      width: 90%;
-      max-width: 400px;
+      width: 95%;
+      max-width: 500px;
       transition: background-color 0.3s;
     }
 
@@ -105,18 +105,18 @@
 
     @media (max-width: 600px) {
       #nft-list {
-        width: 100%; /* Растягиваем контейнер */
-        height: 60vh;
+        width: 100%;
+        height: 65vh;
       }
 
       .nft-item {
-        width: 250px; /* Размер такой же, как на ПК */
+        width: 90vw; /* Огромные на телефоне */
       }
 
       #fortune-btn {
-        font-size: 22px;
-        padding: 20px 0;
-        width: 90%; /* Широкая кнопка */
+        font-size: 26px; /* Крупный текст */
+        padding: 25px 0; /* Больше высота */
+        width: 100%; /* Во всю ширину */
       }
     }
   </style>
