@@ -19,17 +19,17 @@
 
     .container {
       display: grid;
-      grid-template-columns: repeat(2, 1fr); /* 2 столбца */
+      grid-template-columns: repeat(2, 1fr);
       gap: 15px;
       width: 100%;
-      max-width: 600px; /* Для ПК */
+      max-width: 800px; /* Увеличили для ПК */
     }
 
     .case-container {
       cursor: pointer;
       transition: transform 0.3s ease;
-      width: 100%;  /* На телефоне займет всю ячейку */
-      aspect-ratio: 1 / 1; /* Всегда квадрат */
+      width: 100%;
+      aspect-ratio: 1 / 1;
       position: relative;
       overflow: hidden;
       border-radius: 12px;
@@ -57,10 +57,11 @@
 
     @media (max-width: 600px) {
       .container {
-        max-width: 100%; /* Убираем ограничение ширины */
+        max-width: 100%;
+        padding: 0 10px;
       }
       .case-container {
-        width: 100%; /* Каждая ячейка grid будет занимать половину ширины экрана */
+        width: 100%; /* Увеличили ширину кейса на телефоне */
       }
     }
   </style>
