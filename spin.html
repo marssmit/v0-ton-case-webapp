@@ -2,107 +2,124 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Spin</title>
+  <title>TON CASE — Спин</title>
   <style>
     body {
       margin: 0;
-      font-family: sans-serif;
-      color: white;
-      background: url('stars_background.gif') no-repeat center center fixed;
+      background: url('stars_background.gif') no-repeat center center fixed; /* Звездный фон */
       background-size: cover;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      min-height: 100vh;
-      padding: 20px;
-      box-sizing: border-box;
+      color: white;
+      font-family: sans-serif;
+      text-align: center;
+      overflow: hidden;
     }
 
     h1 {
-      font-size: 24px;
+      margin-top: 20px;
       text-shadow: 0 0 10px #00ffff;
-      margin-bottom: 20px;
     }
 
-    .spin-container {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      gap: 20px;
-      width: 90%;
-      max-width: 800px;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      box-sizing: border-box;
+    #nft-list {
+      position: relative;
+      height: 500px; /* Базовая высота */
+      width: 150px;  /* Увеличенная ширина */
+      margin: 20px auto;
+      overflow: hidden;
+      border: 2px solid #00f0ff;
+      border-radius: 10px;
     }
 
     .nft-item {
-      min-width: 120px;
-      min-height: 120px;
-      background: #222;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 12px;
-      font-size: 18px;
-      text-align: center;
+      height: 120px;  /* Увеличенные размеры */
+      width: 120px;
+      margin: 10px auto;
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+      border: 2px solid #333;
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+      animation: spin 2s linear infinite;
     }
 
+    @keyframes spin {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-200%); }
+    }
+
+    #fortune-btn {
+      padding: 15px 30px;
+      background: #00f0ff;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      margin-top: 30px;
+      transition: background 0.3s;
+    }
+
+    #fortune-btn:hover {
+      background: #00c0cc;
+    }
+
+    /* 📱 Увеличение размеров на телефоне */
     @media (max-width: 600px) {
-      .spin-container {
-        flex-direction: column;
-        overflow-x: hidden;
-        overflow-y: auto;
+      #nft-list {
+        width: 90vw;  /* Ширина почти всего экрана */
+        height: 80vh; /* Высота почти всего экрана */
       }
 
       .nft-item {
-        min-width: 80vw;
-        min-height: 80vw;
+        width: 40vw;
+        height: 40vw;
       }
-    }
 
-    .spin-button {
-      margin-top: 20px;
-      padding: 12px 24px;
-      font-size: 20px;
-      background-color: #00ffff;
-      color: black;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .spin-button:hover {
-      background-color: #00cccc;
+      #fortune-btn {
+        font-size: 20px;
+        padding: 20px 40px;
+      }
     }
   </style>
 </head>
 <body>
+  <h1 id="case-title">Открытие кейса</h1>
 
-  <h1>Ваша лента NFT</h1>
-
-  <div class="spin-container">
-    <div class="nft-item">NFT 1</div>
-    <div class="nft-item">NFT 2</div>
-    <div class="nft-item">NFT 3</div>
-    <div class="nft-item">NFT 4</div>
-    <div class="nft-item">NFT 5</div>
+  <div id="nft-list">
+    <!-- Сюда добавятся NFT динамически -->
   </div>
 
-  <!-- Кнопка всегда под лентой -->
-  <button class="spin-button" onclick="tryLuck()">Испытать удачу</button>
+  <button id="fortune-btn">Испытать фортуну</button>
 
   <script>
-    function tryLuck() {
-      alert("Удача испытана! (Можно заменить на переход на выигрышную страницу)");
-      // Например:
-      // window.location.href = "win.html";
-    }
-  </script>
+    // Получаем параметр из URL (например, ?case=egg_case)
+    const urlParams = new URLSearchParams(window.location.search);
+    const caseName = urlParams.get('case') || 'egg_case';
+    document.getElementById('case-title').innerText = `Кейс: ${caseName}`;
 
+    const nftList = document.getElementById("nft-list");
+    const nftImages = [
+      "nft1.png",
+      "nft2.png",
+      "nft3.png",
+      "nft4.png",
+      "nft5.png",
+      "nft6.png",
+      "nft7.png",
+      "nft8.png"
+    ];
+
+    // Загружаем NFT
+    nftImages.forEach(src => {
+      const item = document.createElement("div");
+      item.className = "nft-item";
+      item.style.backgroundImage = `url(${src})`;
+      nftList.appendChild(item);
+    });
+
+    document.getElementById("fortune-btn").addEventListener("click", () => {
+      alert("Поздравляем! Вам выпал подарок!");
+      // Можно добавить переход на экран выигрыша
+      // window.location.href = "win.html?prize=...";
+    });
+  </script>
 </body>
 </html>
