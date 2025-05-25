@@ -2,95 +2,61 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Испытай фортуну</title>
+  <title>TON CASE</title>
   <style>
     body {
       margin: 0;
-      background-color: #0a0f2c;
-      color: white;
+      background: url('your_background.gif') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
       font-family: sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100vh;
+      overflow: hidden;
+    }
+
+    #case-container {
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    #case-container:hover {
+      filter: drop-shadow(0 0 10px #00ffff);
+      transform: scale(1.05);
+    }
+
+    #case-image {
+      width: 240px;
     }
 
     h1 {
-      margin-top: 20px;
       font-size: 24px;
-    }
-
-    #nft-list {
-      position: relative;
-      height: 500px;
-      width: 120px;
-      margin: 20px auto;
-      overflow: hidden;
-      border: 2px solid #00f0ff;
-      border-radius: 10px;
-    }
-
-    .nft-item {
-      height: 100px;
-      width: 100px;
-      margin: 10px auto;
-      background-color: #222;
-      border: 2px solid #fff;
-      border-radius: 10px;
-      background-size: cover;
-      background-position: center;
-    }
-
-    #spin-btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      font-size: 20px;
-      background-color: #00f0ff;
-      color: #000;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    #result {
-      margin-top: 20px;
-      font-size: 20px;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
 
-<h1>Испытай фортуну!</h1>
+  <h1>Выбери кейс</h1>
 
-<div id="nft-list">
-  <div class="nft-item" style="background-image: url('nft1.png');"></div>
-  <div class="nft-item" style="background-image: url('nft2.png');"></div>
-  <div class="nft-item" style="background-image: url('nft3.png');"></div>
-  <div class="nft-item" style="background-image: url('nft4.png');"></div>
-  <div class="nft-item" style="background-image: url('nft5.png');"></div>
-</div>
+  <div id="case-container">
+    <img id="case-image" src="case_closed.png" alt="Кейс" />
+  </div>
 
-<button id="spin-btn">Испытать фортуну</button>
+  <script>
+    const container = document.getElementById("case-container");
+    const image = document.getElementById("case-image");
 
-<div id="result"></div>
-
-<script>
-  const spinButton = document.getElementById("spin-btn");
-  const nftList = document.getElementById("nft-list");
-  const result = document.getElementById("result");
-
-  spinButton.addEventListener("click", () => {
-    nftList.scrollTo({ top: Math.random() * nftList.scrollHeight, behavior: "smooth" });
-
-    // Симуляция выбора случайного NFT
-    setTimeout(() => {
-      const nftImages = ["nft1.png", "nft2.png", "nft3.png", "nft4.png", "nft5.png"];
-      const chosenNFT = nftImages[Math.floor(Math.random() * nftImages.length)];
-      result.innerHTML = `Вы выиграли: <br><img src="${chosenNFT}" style="width:150px;height:150px;border-radius:10px;">`;
-    }, 2000);
-  });
-</script>
+    container.addEventListener("click", () => {
+      image.src = "case_opening.gif"; // Убедись в правильном названии!
+      setTimeout(() => {
+        window.location.href = "spin.html";
+      }, 2500); // Длительность анимации gif
+    });
+  </script>
 
 </body>
 </html>
