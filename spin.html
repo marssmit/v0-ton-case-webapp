@@ -2,61 +2,121 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>TON CASE</title>
+  <title>TON CASE — Спин</title>
   <style>
     body {
       margin: 0;
-      background: url('your_background.gif') no-repeat center center fixed;
+      background: url('stars_background.gif') no-repeat center center fixed; /* Фон со звёздами */
       background-size: cover;
-      color: #fff;
+      color: white;
       font-family: sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      text-align: center;
       overflow: hidden;
     }
 
-    #case-container {
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-
-    #case-container:hover {
-      filter: drop-shadow(0 0 10px #00ffff);
-      transform: scale(1.05);
-    }
-
-    #case-image {
-      width: 240px;
-    }
-
     h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
+      margin-top: 20px;
+    }
+
+    #nft-list {
+      position: relative;
+      height: 500px;
+      width: 120px;
+      margin: 20px auto;
+      overflow: hidden;
+      border: 2px solid #00f0ff;
+      border-radius: 10px;
+    }
+
+    .nft-item {
+      height: 100px;
+      width: 100px;
+      margin: 10px auto;
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+      border: 2px solid #333;
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-200%); }
+    }
+
+    #fortune-btn {
+      padding: 15px 30px;
+      background: #00f0ff;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      margin-top: 30px;
+      transition: background 0.3s;
+    }
+
+    #fortune-btn:hover {
+      background: #00c0cc;
+    }
+
+    /* Увеличение элементов на телефоне */
+    @media (max-width: 600px) {
+      #nft-list {
+        width: 90vw;
+        height: 80vh;
+      }
+
+      .nft-item {
+        width: 80px;
+        height: 80px;
+      }
+
+      #fortune-btn {
+        font-size: 20px;
+        padding: 20px 40px;
+      }
     }
   </style>
 </head>
 <body>
+  <h1 id="case-title">Открытие кейса</h1>
 
-  <h1>Выбери кейс</h1>
-
-  <div id="case-container">
-    <img id="case-image" src="case_closed.png" alt="Кейс" />
+  <div id="nft-list">
+    <!-- Сюда добавятся NFT динамически -->
   </div>
 
-  <script>
-    const container = document.getElementById("case-container");
-    const image = document.getElementById("case-image");
+  <button id="fortune-btn">Испытать фортуну</button>
 
-    container.addEventListener("click", () => {
-      image.src = "case_opening.gif"; // Убедись в правильном названии!
-      setTimeout(() => {
-        window.location.href = "spin.html";
-      }, 2500); // Длительность анимации gif
+  <script>
+    // Оставляю твой исходный код полностью без изменений
+    const urlParams = new URLSearchParams(window.location.search);
+    const caseName = urlParams.get('case') || 'egg_case';
+    document.getElementById('case-title').innerText = `Кейс: ${caseName}`;
+
+    const nftList = document.getElementById("nft-list");
+    const nftImages = [
+      "nft1.png",
+      "nft2.png",
+      "nft3.png",
+      "nft4.png",
+      "nft5.png",
+      "nft6.png",
+      "nft7.png",
+      "nft8.png"
+    ];
+
+    nftImages.forEach(src => {
+      const item = document.createElement("div");
+      item.className = "nft-item";
+      item.style.backgroundImage = `url(${src})`;
+      nftList.appendChild(item);
+    });
+
+    document.getElementById("fortune-btn").addEventListener("click", () => {
+      alert("Поздравляем! Вам выпал подарок!");
+      // window.location.href = "win.html?prize=...";
     });
   </script>
-
 </body>
 </html>
