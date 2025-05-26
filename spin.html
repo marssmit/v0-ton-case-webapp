@@ -47,8 +47,9 @@
 
     .nft-item {
       flex: 0 0 auto;
-      width: 125px;   /* Уменьшено в 1 раз на ПК */
-      height: 125px;  /* Уменьшено в 1 раз на ПК */
+      width: 500px !important;   /* Увеличено на ПК */
+      height: 500px !important;  /* Увеличено на ПК */
+      max-width: none;           /* Снимаем ограничения */
       background-size: cover;
       background-position: center;
       border-radius: 12px;
@@ -111,8 +112,8 @@
 
     @media (max-width: 600px) {
       .nft-item {
-        width: 30vw; /* Маленькие на телефоне */
-        height: 30vw;
+        width: 30vw !important;  /* Уменьшено на телефоне */
+        height: 30vw !important;
       }
 
       #fortune-btn {
