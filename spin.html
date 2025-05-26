@@ -27,7 +27,7 @@
 
     .container {
       display: flex;
-      flex-direction: row; /* Горизонтальная лента */
+      flex-direction: row;
       gap: 15px;
       width: 100%;
       max-width: 100%;
@@ -46,9 +46,9 @@
     }
 
     .nft-item {
-      flex: 0 0 auto; /* Фиксированный размер */
-      width: 250px;
-      height: 250px;
+      flex: 0 0 auto;
+      width: 125px;   /* Уменьшено на ПК */
+      height: 125px;  /* Уменьшено на ПК */
       background-size: cover;
       background-position: center;
       border-radius: 12px;
@@ -111,8 +111,8 @@
 
     @media (max-width: 600px) {
       .nft-item {
-        width: 90vw;
-        height: 90vw;
+        width: 180vw; /* Увеличено в 2 раза на телефоне */
+        height: 180vw;/* Увеличено в 2 раза на телефоне */
       }
 
       #fortune-btn {
@@ -128,7 +128,7 @@
   <h1 id="case-title"></h1>
 
   <div class="container" id="nft-list">
-    <!-- Заглушки добавятся сюда -->
+    <!-- Заглушки -->
   </div>
 
   <button id="fortune-btn">Испытать фортуну</button>
