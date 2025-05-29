@@ -110,7 +110,7 @@
       }
 
       #neon-marker {
-        height: 120px; /* чуть короче на телефоне */
+        height: 120px;
       }
     }
 
@@ -200,25 +200,27 @@
       const prize = getRandomNFT();
       const items = Array.from(nftList.children);
       const index = items.findIndex(item => item.style.backgroundImage.includes(prize.src));
+
       if (index !== -1) {
         const prizeItem = items[index];
-        
-        // Анимация рулетки
-        let totalScroll = 0;
-        let step = 50;
+        const targetScroll = prizeItem.offsetLeft;
+        let currentScroll = nftList.scrollLeft;
+        let speed = 60; // Начальная скорость
+        let deceleration = 0.95; // Замедление
         const interval = setInterval(() => {
-          nftList.scrollLeft += step;
-          totalScroll += step;
-          if (totalScroll > 5000) { // Прокрутка рулетки
+          currentScroll += speed;
+          nftList.scrollLeft = currentScroll;
+          speed *= deceleration; // Уменьшаем скорость
+          if (speed < 1) {
             clearInterval(interval);
-            nftList.scrollTo({ left: prizeItem.offsetLeft, behavior: "smooth" });
+            nftList.scrollTo({ left: targetScroll, behavior: "smooth" });
             setTimeout(() => {
               document.getElementById("prize-image").src = prize.src;
               document.getElementById("prize-name").textContent = prize.name;
               document.getElementById("result-modal").style.display = "block";
             }, 1000);
           }
-        }, 10);
+        }, 20);
       }
     });
 
