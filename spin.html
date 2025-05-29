@@ -12,12 +12,13 @@
       color: white;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;  /* Кнопка внизу */
+      justify-content: space-between;
       align-items: center;
       min-height: 100vh;
       box-sizing: border-box;
       overflow-x: hidden;
       padding: 10px;
+      position: relative;
     }
 
     h1 {
@@ -39,9 +40,10 @@
       border-radius: 12px;
       scrollbar-width: none;
       -ms-overflow-style: none;
-      flex: 1 1 auto;  /* Лента растягивается по центру */
+      flex: 1 1 auto;
       align-items: center;
       justify-content: center;
+      position: relative;
     }
 
     .container::-webkit-scrollbar {
@@ -75,11 +77,41 @@
       cursor: pointer;
       width: 90%;
       max-width: 800px;
-      margin-bottom: 10px; /* отступ от нижнего края */
+      margin-bottom: 10px;
     }
 
     #fortune-btn:hover {
       background-color: #00cccc;
+    }
+
+    /* Неоновая метка */
+    #neon-marker {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 10px;
+      height: 100px;
+      background: linear-gradient(180deg, #00ffff, #00ccff);
+      box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
+      border-radius: 5px;
+      z-index: 10;
+    }
+
+    @media (max-width: 600px) {
+      .nft-item {
+        width: 30vw !important;
+        height: 30vw !important;
+      }
+
+      #fortune-btn {
+        padding: 22px;
+        font-size: 22px;
+      }
+
+      #neon-marker {
+        height: 60px; /* Меньше на телефоне */
+      }
     }
 
     #result-modal {
@@ -112,18 +144,6 @@
       border-radius: 8px;
       cursor: pointer;
     }
-
-    @media (max-width: 600px) {
-      .nft-item {
-        width: 30vw !important;
-        height: 30vw !important;
-      }
-
-      #fortune-btn {
-        padding: 22px;
-        font-size: 22px;
-      }
-    }
   </style>
 </head>
 <body>
@@ -132,6 +152,7 @@
 
   <div class="container" id="nft-list">
     <!-- Заглушки -->
+    <div id="neon-marker"></div>
   </div>
 
   <button id="fortune-btn">Испытать фортуну</button>
