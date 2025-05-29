@@ -84,17 +84,17 @@
       background-color: #00cccc;
     }
 
-    /* Неоновая метка */
+    /* Тонкая и длинная неоновая метка */
     #neon-marker {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 10px;
-      height: 100px;
+      width: 3px;
+      height: 200px;
       background: linear-gradient(180deg, #00ffff, #00ccff);
       box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
-      border-radius: 5px;
+      border-radius: 2px;
       z-index: 10;
     }
 
@@ -110,7 +110,7 @@
       }
 
       #neon-marker {
-        height: 60px; /* Меньше на телефоне */
+        height: 120px; /* чуть короче на телефоне */
       }
     }
 
@@ -202,14 +202,24 @@
       const index = items.findIndex(item => item.style.backgroundImage.includes(prize.src));
       if (index !== -1) {
         const prizeItem = items[index];
-        nftList.scrollTo({ left: prizeItem.offsetLeft, behavior: "smooth" });
+        
+        // Анимация рулетки
+        let totalScroll = 0;
+        let step = 50;
+        const interval = setInterval(() => {
+          nftList.scrollLeft += step;
+          totalScroll += step;
+          if (totalScroll > 5000) { // Прокрутка рулетки
+            clearInterval(interval);
+            nftList.scrollTo({ left: prizeItem.offsetLeft, behavior: "smooth" });
+            setTimeout(() => {
+              document.getElementById("prize-image").src = prize.src;
+              document.getElementById("prize-name").textContent = prize.name;
+              document.getElementById("result-modal").style.display = "block";
+            }, 1000);
+          }
+        }, 10);
       }
-
-      setTimeout(() => {
-        document.getElementById("prize-image").src = prize.src;
-        document.getElementById("prize-name").textContent = prize.name;
-        document.getElementById("result-modal").style.display = "block";
-      }, 1500);
     });
 
     document.getElementById("claim-btn").addEventListener("click", () => {
