@@ -44,6 +44,7 @@
       align-items: center;
       justify-content: center;
       position: relative;
+      scroll-behavior: smooth;
     }
 
     .container::-webkit-scrollbar {
@@ -52,9 +53,8 @@
 
     .nft-item {
       flex: 0 0 auto;
-      width: 400px !important;
-      height: 400px !important;
-      max-width: none;
+      width: 400px;
+      height: 400px;
       background-size: cover;
       background-position: center;
       border-radius: 12px;
@@ -62,9 +62,9 @@
       transition: transform 0.3s ease;
     }
 
-    .nft-item:hover {
-      transform: scale(1.05);
-      filter: drop-shadow(0 0 15px #00ffff);
+    .nft-item.highlight {
+      transform: scale(1.3);
+      z-index: 5;
     }
 
     #fortune-btn {
@@ -89,28 +89,18 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 3px;
-      height: 200px;
+      width: 1px; /* Ещё тоньше */
+      height: 300px; /* Длиннее */
       background: linear-gradient(180deg, #00ffff, #00ccff);
       box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
-      border-radius: 2px;
+      border-radius: 1px;
       z-index: 10;
-    }
-
-    #flash {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: white;
-      opacity: 0;
-      pointer-events: none;
-      z-index: 999;
-      transition: opacity 0.5s;
     }
 
     @media (max-width: 600px) {
       .nft-item {
-        width: 30vw !important;
-        height: 30vw !important;
+        width: 30vw;
+        height: 30vw;
       }
 
       #fortune-btn {
@@ -119,7 +109,7 @@
       }
 
       #neon-marker {
-        height: 120px;
+        height: 200px;
       }
     }
 
@@ -157,104 +147,105 @@
 </head>
 <body>
 
-  <h1 id="case-title"></h1>
+<h1 id="case-title"></h1>
 
-  <div class="container" id="nft-list">
-    <!-- Заглушки -->
-    <div id="neon-marker"></div>
-  </div>
+<div class="container" id="nft-list">
+  <!-- NFT элементы -->
+  <div id="neon-marker"></div>
+</div>
 
-  <button id="fortune-btn">Испытать фортуну</button>
+<button id="fortune-btn">Испытать фортуну</button>
 
-  <div id="flash"></div>
+<div id="result-modal">
+  <h2>Ваш выигрыш!</h2>
+  <img id="prize-image" src="" alt="Приз">
+  <p id="prize-name"></p>
+  <button id="claim-btn">Забрать подарок</button>
+</div>
 
-  <div id="result-modal">
-    <h2>Ваш выигрыш!</h2>
-    <img id="prize-image" src="" alt="Приз">
-    <p id="prize-name"></p>
-    <button id="claim-btn">Забрать подарок</button>
-  </div>
+<script>
+const nftList = document.getElementById("nft-list");
+const nftImages = [
+  { src: "nft1.png", name: "NFT 1", rarity: "common" },
+  { src: "nft2.png", name: "NFT 2", rarity: "common" },
+  { src: "nft3.png", name: "NFT 3", rarity: "common" },
+  { src: "nft4.png", name: "NFT 4", rarity: "uncommon" },
+  { src: "nft5.png", name: "NFT 5", rarity: "rare" },
+  { src: "nft6.png", name: "NFT 6", rarity: "legendary" },
+  { src: "nft7.png", name: "NFT 7", rarity: "common" },
+  { src: "nft8.png", name: "NFT 8", rarity: "common" }
+];
 
-  <audio id="click-sound" src="click.mp3"></audio> <!-- добавь свой звук -->
+nftImages.forEach(nft => {
+  const item = document.createElement("div");
+  item.className = "nft-item";
+  item.style.backgroundImage = `url(${nft.src})`;
+  nftList.appendChild(item);
+});
 
-  <script>
-    const urlParams = new URLSearchParams(window.location.search);
-    const caseName = urlParams.get('case') || 'egg_case';
-    document.getElementById("case-title").textContent = `Кейс: ${caseName}`;
-
-    const nftList = document.getElementById("nft-list");
-    const nftImages = [
-      { src: "nft1.png", name: "NFT 1", rarity: "common" },
-      { src: "nft2.png", name: "NFT 2", rarity: "common" },
-      { src: "nft3.png", name: "NFT 3", rarity: "common" },
-      { src: "nft4.png", name: "NFT 4", rarity: "uncommon" },
-      { src: "nft5.png", name: "NFT 5", rarity: "rare" },
-      { src: "nft6.png", name: "NFT 6", rarity: "legendary" },
-      { src: "nft7.png", name: "NFT 7", rarity: "common" },
-      { src: "nft8.png", name: "NFT 8", rarity: "common" }
-    ];
-
-    nftImages.forEach(nft => {
-      const item = document.createElement("div");
-      item.className = "nft-item";
-      item.style.backgroundImage = `url(${nft.src})`;
-      nftList.appendChild(item);
-    });
-
-    document.getElementById("fortune-btn").addEventListener("click", () => {
-      const prize = getRandomNFT();
-      const items = Array.from(nftList.children);
-      const index = items.findIndex(item => item.style.backgroundImage.includes(prize.src));
-
-      if (index !== -1) {
-        const prizeItem = items[index];
-        const targetScroll = prizeItem.offsetLeft;
-        let currentScroll = nftList.scrollLeft;
-        let speed = 100; 
-        let deceleration = 0.97; 
-        let maxScroll = targetScroll + 4000; // Длинная прокрутка
-        const clickSound = document.getElementById("click-sound");
-
-        const spin = setInterval(() => {
-          currentScroll += speed;
-          nftList.scrollLeft = currentScroll;
-          speed *= deceleration;
-
-          if (currentScroll >= maxScroll || speed < 2) {
-            clearInterval(spin);
-            nftList.scrollTo({ left: targetScroll, behavior: "smooth" });
-
-            // Вспышка
-            const flash = document.getElementById("flash");
-            flash.style.opacity = "1";
-            setTimeout(() => flash.style.opacity = "0", 500);
-
-            // Щелчок
-            clickSound.play();
-
-            setTimeout(() => {
-              document.getElementById("prize-image").src = prize.src;
-              document.getElementById("prize-name").textContent = prize.name;
-              document.getElementById("result-modal").style.display = "block";
-            }, 1000);
-          }
-        }, 20);
-      }
-    });
-
-    function getRandomNFT() {
-      const chance = Math.random() * 100;
-      if (chance < 0.5) return nftImages.find(nft => nft.rarity === "legendary");
-      if (chance < 2) return nftImages.find(nft => nft.rarity === "rare");
-      if (chance < 12) return nftImages.find(nft => nft.rarity === "uncommon");
-      return nftImages.find(nft => nft.rarity === "common");
+// Выделение NFT под линией
+function highlightNFT() {
+  const marker = document.getElementById("neon-marker").getBoundingClientRect();
+  const items = Array.from(document.querySelectorAll(".nft-item"));
+  items.forEach(item => {
+    const rect = item.getBoundingClientRect();
+    const center = rect.left + rect.width / 2;
+    if (center >= marker.left - 5 && center <= marker.right + 5) {
+      item.classList.add("highlight");
+    } else {
+      item.classList.remove("highlight");
     }
+  });
+}
+nftList.addEventListener("scroll", highlightNFT);
+window.addEventListener("resize", highlightNFT);
+highlightNFT();
 
-    document.getElementById("claim-btn").addEventListener("click", () => {
-      alert("Бот отправляет вам NFT подарок!");
-      document.getElementById("result-modal").style.display = "none";
-    });
-  </script>
+// Алгоритм выпадения
+function getRandomNFT() {
+  const chance = Math.random() * 100;
+  if (chance < 0.5) return nftImages.find(nft => nft.rarity === "legendary");
+  if (chance < 2) return nftImages.find(nft => nft.rarity === "rare");
+  if (chance < 12) return nftImages.find(nft => nft.rarity === "uncommon");
+  return nftImages.find(nft => nft.rarity === "common");
+}
+
+document.getElementById("fortune-btn").addEventListener("click", () => {
+  const prize = getRandomNFT();
+  const items = Array.from(nftList.children).filter(el => el.classList.contains("nft-item"));
+  const index = items.findIndex(item => item.style.backgroundImage.includes(prize.src));
+
+  if (index !== -1) {
+    const prizeItem = items[index];
+    const targetScroll = prizeItem.offsetLeft - nftList.clientWidth / 2 + prizeItem.clientWidth / 2;
+
+    let scrollAmount = 0;
+    let speed = 50;
+    let deceleration = 0.95;
+
+    const spin = setInterval(() => {
+      nftList.scrollLeft += speed;
+      scrollAmount += speed;
+      speed *= deceleration;
+
+      if (speed < 1 || scrollAmount >= 5000) {
+        clearInterval(spin);
+        nftList.scrollTo({ left: targetScroll, behavior: "smooth" });
+        setTimeout(() => {
+          document.getElementById("prize-image").src = prize.src;
+          document.getElementById("prize-name").textContent = prize.name;
+          document.getElementById("result-modal").style.display = "block";
+        }, 1000);
+      }
+    }, 20);
+  }
+});
+
+document.getElementById("claim-btn").addEventListener("click", () => {
+  alert("Бот отправляет вам NFT подарок!");
+  document.getElementById("result-modal").style.display = "none";
+});
+</script>
 
 </body>
 </html>
