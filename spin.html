@@ -84,7 +84,6 @@
       background-color: #00cccc;
     }
 
-    /* Тонкая и длинная неоновая метка */
     #neon-marker {
       position: absolute;
       top: 50%;
@@ -96,6 +95,16 @@
       box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
       border-radius: 2px;
       z-index: 10;
+    }
+
+    #flash {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: white;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 999;
+      transition: opacity 0.5s;
     }
 
     @media (max-width: 600px) {
@@ -157,12 +166,16 @@
 
   <button id="fortune-btn">Испытать фортуну</button>
 
+  <div id="flash"></div>
+
   <div id="result-modal">
     <h2>Ваш выигрыш!</h2>
     <img id="prize-image" src="" alt="Приз">
     <p id="prize-name"></p>
     <button id="claim-btn">Забрать подарок</button>
   </div>
+
+  <audio id="click-sound" src="click.mp3"></audio> <!-- добавь свой звук -->
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
@@ -188,14 +201,6 @@
       nftList.appendChild(item);
     });
 
-    function getRandomNFT() {
-      const chance = Math.random() * 100;
-      if (chance < 0.5) return nftImages.find(nft => nft.rarity === "legendary");
-      if (chance < 2) return nftImages.find(nft => nft.rarity === "rare");
-      if (chance < 12) return nftImages.find(nft => nft.rarity === "uncommon");
-      return nftImages.find(nft => nft.rarity === "common");
-    }
-
     document.getElementById("fortune-btn").addEventListener("click", () => {
       const prize = getRandomNFT();
       const items = Array.from(nftList.children);
@@ -205,15 +210,28 @@
         const prizeItem = items[index];
         const targetScroll = prizeItem.offsetLeft;
         let currentScroll = nftList.scrollLeft;
-        let speed = 60; // Начальная скорость
-        let deceleration = 0.95; // Замедление
-        const interval = setInterval(() => {
+        let speed = 100; 
+        let deceleration = 0.97; 
+        let maxScroll = targetScroll + 4000; // Длинная прокрутка
+        const clickSound = document.getElementById("click-sound");
+
+        const spin = setInterval(() => {
           currentScroll += speed;
           nftList.scrollLeft = currentScroll;
-          speed *= deceleration; // Уменьшаем скорость
-          if (speed < 1) {
-            clearInterval(interval);
+          speed *= deceleration;
+
+          if (currentScroll >= maxScroll || speed < 2) {
+            clearInterval(spin);
             nftList.scrollTo({ left: targetScroll, behavior: "smooth" });
+
+            // Вспышка
+            const flash = document.getElementById("flash");
+            flash.style.opacity = "1";
+            setTimeout(() => flash.style.opacity = "0", 500);
+
+            // Щелчок
+            clickSound.play();
+
             setTimeout(() => {
               document.getElementById("prize-image").src = prize.src;
               document.getElementById("prize-name").textContent = prize.name;
@@ -223,6 +241,14 @@
         }, 20);
       }
     });
+
+    function getRandomNFT() {
+      const chance = Math.random() * 100;
+      if (chance < 0.5) return nftImages.find(nft => nft.rarity === "legendary");
+      if (chance < 2) return nftImages.find(nft => nft.rarity === "rare");
+      if (chance < 12) return nftImages.find(nft => nft.rarity === "uncommon");
+      return nftImages.find(nft => nft.rarity === "common");
+    }
 
     document.getElementById("claim-btn").addEventListener("click", () => {
       alert("Бот отправляет вам NFT подарок!");
