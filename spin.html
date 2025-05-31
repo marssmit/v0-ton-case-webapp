@@ -168,7 +168,7 @@ const nftImages = [
   { src: "nft8.png", name: "NFT 8", rarity: "common" }
 ];
 
-// Добавляем много заглушек на ПК, меньше на телефоне
+// Добавляем заглушки
 const repeatCount = window.innerWidth > 600 ? 6 : 3;
 for (let i = 0; i < repeatCount; i++) {
   nftImages.forEach(nft => {
@@ -179,12 +179,12 @@ for (let i = 0; i < repeatCount; i++) {
   });
 }
 
-// Добавляем горизонтальную прокрутку колесиком мыши на ПК
+// Горизонтальная прокрутка колесиком на ПК
 if (window.innerWidth > 600) {
   nftList.addEventListener('wheel', (e) => {
     e.preventDefault();
-    nftList.scrollLeft += e.deltaY;
-  });
+    nftList.scrollLeft += e.deltaY; // Прокрутка по горизонтали
+  }, { passive: false }); // Обязательно passive: false!
 }
 
 function highlightNFT() {
