@@ -141,7 +141,7 @@
 <h1 id="case-title">Кейс</h1>
 
 <div class="container" id="nft-list">
-  <!-- NFT заглушки -->
+  <!-- Заглушки будут добавлены скриптом -->
 </div>
 
 <div id="neon-marker"></div>
@@ -168,15 +168,17 @@ const nftImages = [
   { src: "nft8.png", name: "NFT 8", rarity: "common" }
 ];
 
-// Добавляем заглушки
-nftImages.forEach(nft => {
-  const item = document.createElement("div");
-  item.className = "nft-item";
-  item.style.backgroundImage = `url(${nft.src})`;
-  nftList.appendChild(item);
-});
+// Добавляем больше заглушек (например, повторяем массив 3 раза)
+for (let i = 0; i < 3; i++) {
+  nftImages.forEach(nft => {
+    const item = document.createElement("div");
+    item.className = "nft-item";
+    item.style.backgroundImage = `url(${nft.src})`;
+    nftList.appendChild(item);
+  });
+}
 
-// Обновляем выделение
+// Выделение под линией
 function highlightNFT() {
   const markerX = window.innerWidth / 2;
   const items = document.querySelectorAll(".nft-item");
@@ -191,12 +193,10 @@ function highlightNFT() {
   });
 }
 
-// Слушатели для ручной прокрутки
 nftList.addEventListener("scroll", highlightNFT);
 window.addEventListener("resize", highlightNFT);
 highlightNFT();
 
-// Алгоритм выпадения
 function getRandomNFT() {
   const chance = Math.random() * 100;
   if (chance < 0.5) return nftImages.find(nft => nft.rarity === "legendary");
@@ -205,7 +205,6 @@ function getRandomNFT() {
   return nftImages.find(nft => nft.rarity === "common");
 }
 
-// Кнопка запуска
 document.getElementById("fortune-btn").addEventListener("click", () => {
   const prize = getRandomNFT();
   const items = Array.from(document.querySelectorAll(".nft-item"));
