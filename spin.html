@@ -90,7 +90,7 @@
 
     @media (max-width: 600px) {
       .nft-item {
-        width: 30vw;   /* Оставляем как было для телефона */
+        width: 30vw;
         height: 30vw;
       }
 
@@ -168,7 +168,7 @@ const nftImages = [
   { src: "nft8.png", name: "NFT 8", rarity: "common" }
 ];
 
-// Добавляем много заглушек на ПК, но не меняем на телефоне
+// Добавляем много заглушек на ПК, меньше на телефоне
 const repeatCount = window.innerWidth > 600 ? 6 : 3;
 for (let i = 0; i < repeatCount; i++) {
   nftImages.forEach(nft => {
@@ -176,6 +176,14 @@ for (let i = 0; i < repeatCount; i++) {
     item.className = "nft-item";
     item.style.backgroundImage = `url(${nft.src})`;
     nftList.appendChild(item);
+  });
+}
+
+// Добавляем горизонтальную прокрутку колесиком мыши на ПК
+if (window.innerWidth > 600) {
+  nftList.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    nftList.scrollLeft += e.deltaY;
   });
 }
 
