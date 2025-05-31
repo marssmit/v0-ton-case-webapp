@@ -90,8 +90,8 @@
 
     @media (max-width: 600px) {
       .nft-item {
-        width: 30vw;
-        height: 30vw;
+        width: 70vw;  /* Увеличили ширину для телефона */
+        height: 70vw;
       }
 
       #fortune-btn {
@@ -168,7 +168,7 @@ const nftImages = [
   { src: "nft8.png", name: "NFT 8", rarity: "common" }
 ];
 
-// Добавляем больше заглушек (например, повторяем массив 3 раза)
+// Добавляем больше заглушек для длинной ленты
 for (let i = 0; i < 3; i++) {
   nftImages.forEach(nft => {
     const item = document.createElement("div");
@@ -178,7 +178,6 @@ for (let i = 0; i < 3; i++) {
   });
 }
 
-// Выделение под линией
 function highlightNFT() {
   const markerX = window.innerWidth / 2;
   const items = document.querySelectorAll(".nft-item");
