@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>TON CASE — Спин</title>
   <style>
     body {
@@ -35,6 +35,7 @@
       border-radius: 12px;
       flex: 1 1 auto;
       align-items: center;
+      position: relative;
       scroll-behavior: smooth;
     }
 
@@ -100,23 +101,14 @@ const nftImages = [
   "nft5.png", "nft6.png", "nft7.png", "nft8.png"
 ];
 
-// Заглушки повторяем 3 раза (можно больше на ПК)
-const repeatCount = window.innerWidth > 600 ? 10 : 3;
-for (let i = 0; i < repeatCount; i++) {
+// Заглушки повторяем 3 раза
+for (let i = 0; i < 3; i++) {
   nftImages.forEach(src => {
     const item = document.createElement("div");
     item.className = "nft-item";
     item.style.backgroundImage = `url(${src})`;
     nftList.appendChild(item);
   });
-}
-
-// Прокрутка колесиком на ПК
-if (window.innerWidth > 600) {
-  nftList.addEventListener("wheel", (e) => {
-    e.preventDefault();
-    nftList.scrollLeft += e.deltaY;
-  }, { passive: false });
 }
 
 // Кнопка (заглушка)
