@@ -29,7 +29,6 @@
       display: flex;
       gap: 15px;
       width: 100%;
-      min-width: 1200px; /* Минимальная ширина контейнера для ПК */
       overflow-x: auto;
       padding: 10px;
       background: rgba(0,0,0,0.4);
@@ -169,24 +168,14 @@ const nftImages = [
   { src: "nft8.png", name: "NFT 8", rarity: "common" }
 ];
 
-// Больше заглушек на ПК
-const repeatCount = window.innerWidth > 600 ? 10 : 3;
-for (let i = 0; i < repeatCount; i++) {
+// Заглушки повторяем 3 раза
+for (let i = 0; i < 3; i++) {
   nftImages.forEach(nft => {
     const item = document.createElement("div");
     item.className = "nft-item";
     item.style.backgroundImage = `url(${nft.src})`;
     nftList.appendChild(item);
   });
-}
-
-// Горизонтальная прокрутка колесиком на ПК
-if (window.innerWidth > 600) {
-  nftList.addEventListener('wheel', (e) => {
-    e.preventDefault();
-    nftList.scrollLeft += e.deltaY;
-    console.log(`Scrolled: ${nftList.scrollLeft}`); // Отладка
-  }, { passive: false });
 }
 
 function highlightNFT() {
