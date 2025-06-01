@@ -14,9 +14,9 @@
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      overflow-x: hidden;
       padding: 10px;
       box-sizing: border-box;
+      overflow-x: hidden;
     }
 
     h1 {
@@ -27,14 +27,15 @@
 
     .container {
       display: flex;
+      flex-direction: row; /* Горизонтально */
       gap: 15px;
-      width: 200%; /* Увеличили для демонстрации */
+      width: 100%;
       overflow-x: auto;
       padding: 10px;
-      background: rgba(0,0,0,0.4);
+      background: rgba(0, 0, 0, 0.4);
       border-radius: 12px;
       align-items: center;
-      position: relative;
+      justify-content: flex-start;
       scroll-behavior: smooth;
     }
 
@@ -49,28 +50,30 @@
       background-size: cover;
       background-position: center;
       border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,240,255,0.3);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
       transition: transform 0.3s ease;
     }
 
-    @media (max-width: 600px) {
-      .container {
-        width: 100%; /* На телефоне по ширине экрана */
-      }
-      .nft-item {
-        width: 30vw;
-        height: 30vw;
-      }
+    .nft-item.highlight {
+      transform: scale(1.3);
+      z-index: 5;
     }
 
     #fortune-btn {
-      padding: 20px 40px;
-      font-size: 24px;
+      padding: 48px;
+      font-size: 48px;
       background-color: #00f0ff;
+      color: black;
       border: none;
       border-radius: 8px;
-      margin-top: 20px;
       cursor: pointer;
+      width: 90%;
+      max-width: 800px;
+      margin-top: 30px;
+    }
+
+    #fortune-btn:hover {
+      background-color: #00cccc;
     }
 
     #neon-marker {
@@ -84,6 +87,53 @@
       box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
       z-index: 10;
     }
+
+    @media (max-width: 600px) {
+      .nft-item {
+        width: 30vw;
+        height: 30vw;
+      }
+
+      #fortune-btn {
+        padding: 22px;
+        font-size: 22px;
+      }
+
+      #neon-marker {
+        height: 200px;
+      }
+    }
+
+    #result-modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #222;
+      padding: 20px;
+      border-radius: 10px;
+      z-index: 1000;
+      text-align: center;
+    }
+
+    #result-modal img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    #claim-btn {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #00f0ff;
+      color: black;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -91,38 +141,72 @@
 <h1>Кейс</h1>
 
 <div class="container" id="nft-list">
-  <!-- Заглушки будут добавлены скриптом -->
+  <!-- Заглушки будут добавлены динамически -->
 </div>
 
 <div id="neon-marker"></div>
 
 <button id="fortune-btn">Испытать фортуну</button>
 
+<div id="result-modal">
+  <h2>Ваш выигрыш!</h2>
+  <img id="prize-image" src="" alt="Приз">
+  <p id="prize-name"></p>
+  <button id="claim-btn">Забрать подарок</button>
+</div>
+
 <script>
 const nftList = document.getElementById("nft-list");
 const nftImages = [
-  "nft1.png", "nft2.png", "nft3.png", "nft4.png",
-  "nft5.png", "nft6.png", "nft7.png", "nft8.png"
+  { src: "nft1.png", name: "NFT 1", rarity: "common" },
+  { src: "nft2.png", name: "NFT 2", rarity: "common" },
+  { src: "nft3.png", name: "NFT 3", rarity: "common" },
+  { src: "nft4.png", name: "NFT 4", rarity: "uncommon" },
+  { src: "nft5.png", name: "NFT 5", rarity: "rare" },
+  { src: "nft6.png", name: "NFT 6", rarity: "legendary" },
+  { src: "nft7.png", name: "NFT 7", rarity: "common" },
+  { src: "nft8.png", name: "NFT 8", rarity: "common" }
 ];
 
-// Добавляем заглушки
-for (let i = 0; i < 6; i++) { // Больше заглушек
-  nftImages.forEach(src => {
+// Добавляем заглушки (больше для ПК, меньше для телефона)
+const repeatCount = window.innerWidth > 600 ? 3 : 3;
+for (let i = 0; i < repeatCount; i++) {
+  nftImages.forEach(nft => {
     const item = document.createElement("div");
     item.className = "nft-item";
-    item.style.backgroundImage = `url(${src})`;
+    item.style.backgroundImage = `url(${nft.src})`;
     nftList.appendChild(item);
   });
 }
 
-// Горизонтальная прокрутка колесиком
-nftList.addEventListener('wheel', function(e) {
-  if (e.deltaY !== 0) {
+// Прокрутка колесиком мыши на ПК
+if (window.innerWidth > 600) {
+  nftList.addEventListener('wheel', (e) => {
     e.preventDefault();
     nftList.scrollLeft += e.deltaY;
-  }
-}, { passive: false });
+  }, { passive: false });
+}
 
+// Подсветка при попадании в центр линии
+function highlightNFT() {
+  const markerX = window.innerWidth / 2;
+  const items = document.querySelectorAll(".nft-item");
+  items.forEach(item => {
+    const rect = item.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    if (Math.abs(centerX - markerX) < rect.width / 4) {
+      item.classList.add("highlight");
+    } else {
+      item.classList.remove("highlight");
+    }
+  });
+}
+
+nftList.addEventListener("scroll", highlightNFT);
+window.addEventListener("resize", highlightNFT);
+highlightNFT();
+
+// Кнопка испытать фортуну
 document.getElementById("fortune-btn").addEventListener("click", () => {
   alert("Испытать фортуну!");
 });
