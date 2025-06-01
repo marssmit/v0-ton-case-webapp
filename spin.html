@@ -168,9 +168,8 @@ const nftImages = [
   { src: "nft8.png", name: "NFT 8", rarity: "common" }
 ];
 
-// На ПК больше заглушек (10 раз), на телефоне меньше (3 раза)
-const repeatCount = window.innerWidth > 600 ? 10 : 3;
-for (let i = 0; i < repeatCount; i++) {
+// Заглушки повторяем 3 раза
+for (let i = 0; i < 3; i++) {
   nftImages.forEach(nft => {
     const item = document.createElement("div");
     item.className = "nft-item";
@@ -182,9 +181,9 @@ for (let i = 0; i < repeatCount; i++) {
 // Прокрутка колесиком мыши на ПК
 if (window.innerWidth > 600) {
   nftList.addEventListener('wheel', (e) => {
-    e.preventDefault();
-    nftList.scrollLeft += e.deltaY;
-  }, { passive: false });
+    e.preventDefault(); // Отключаем вертикальное поведение
+    nftList.scrollLeft += e.deltaY; // Прокручиваем горизонтально
+  }, { passive: false }); // Обязательно для preventDefault
 }
 
 function highlightNFT() {
