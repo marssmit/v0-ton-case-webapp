@@ -141,7 +141,7 @@
 <h1 id="case-title">Кейс</h1>
 
 <div class="container" id="nft-list">
-  <!-- Заглушки будут добавлены скриптом -->
+  <!-- Заглушки будут добавлены динамически -->
 </div>
 
 <div id="neon-marker"></div>
@@ -179,11 +179,13 @@ for (let i = 0; i < repeatCount; i++) {
   });
 }
 
-// Добавляем обработчик для прокрутки колесиком мыши на ПК
+// Прокрутка колесиком мыши на ПК без Shift
 if (window.innerWidth > 600) {
   nftList.addEventListener('wheel', (e) => {
-    e.preventDefault();
-    nftList.scrollLeft += e.deltaY * 2;  // Умножаем на 2 для увеличения скорости
+    if (e.deltaY !== 0) {
+      e.preventDefault(); // Отключаем вертикальное поведение
+      nftList.scrollLeft += e.deltaY * 2; // Горизонтальная прокрутка
+    }
   }, { passive: false });
 }
 
