@@ -37,11 +37,7 @@
       align-items: center;
       position: relative;
       scroll-behavior: smooth;
-      cursor: grab; /* Курсор для drag-and-scroll */
-    }
-
-    .container.dragging {
-      cursor: grabbing;
+      scroll-snap-type: x mandatory; /* Включаем scroll-snap */
     }
 
     .container::-webkit-scrollbar {
@@ -57,6 +53,7 @@
       border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,240,255,0.3);
       transition: transform 0.3s ease;
+      scroll-snap-align: center; /* Заглушки центрируются */
     }
 
     .nft-item.highlight {
@@ -201,36 +198,6 @@ nftList.addEventListener("scroll", highlightNFT);
 window.addEventListener("resize", highlightNFT);
 highlightNFT();
 
-// Drag-and-Scroll реализация
-let isDown = false;
-let startX;
-let scrollLeft;
-
-nftList.addEventListener('mousedown', (e) => {
-  isDown = true;
-  nftList.classList.add('dragging');
-  startX = e.pageX - nftList.offsetLeft;
-  scrollLeft = nftList.scrollLeft;
-});
-
-nftList.addEventListener('mouseleave', () => {
-  isDown = false;
-  nftList.classList.remove('dragging');
-});
-
-nftList.addEventListener('mouseup', () => {
-  isDown = false;
-  nftList.classList.remove('dragging');
-});
-
-nftList.addEventListener('mousemove', (e) => {
-  if (!isDown) return;
-  e.preventDefault();
-  const x = e.pageX - nftList.offsetLeft;
-  const walk = (x - startX) * 2; // скорость прокрутки
-  nftList.scrollLeft = scrollLeft - walk;
-});
-
 // Кнопка "Испытать фортуну"
 function getRandomNFT() {
   const chance = Math.random() * 100;
@@ -247,21 +214,12 @@ document.getElementById("fortune-btn").addEventListener("click", () => {
   if (index !== -1) {
     const prizeItem = items[index];
     const targetScroll = prizeItem.offsetLeft - nftList.clientWidth / 2 + prizeItem.clientWidth / 2;
-    let scrollAmount = 0, speed = 50, deceleration = 0.95;
-    const spin = setInterval(() => {
-      nftList.scrollLeft += speed;
-      scrollAmount += speed;
-      speed *= deceleration;
-      if (speed < 1 || scrollAmount >= 5000) {
-        clearInterval(spin);
-        nftList.scrollTo({ left: targetScroll, behavior: "smooth" });
-        setTimeout(() => {
-          document.getElementById("prize-image").src = prize.src;
-          document.getElementById("prize-name").textContent = prize.name;
-          document.getElementById("result-modal").style.display = "block";
-        }, 1000);
-      }
-    }, 20);
+    nftList.scrollTo({ left: targetScroll, behavior: "smooth" });
+    setTimeout(() => {
+      document.getElementById("prize-image").src = prize.src;
+      document.getElementById("prize-name").textContent = prize.name;
+      document.getElementById("result-modal").style.display = "block";
+    }, 1000);
   }
 });
 
