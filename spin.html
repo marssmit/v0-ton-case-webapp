@@ -80,7 +80,7 @@
 
     #neon-marker {
       position: fixed;
-      top: 50%;
+      top: 40%; /* Смещено на 10% выше центра */
       left: 50%;
       transform: translate(-50%, -50%);
       width: 1px;
@@ -103,6 +103,7 @@
 
       #neon-marker {
         height: 200px;
+        top: 40%; /* Тоже смещаем на 10% выше на мобильных */
       }
     }
 
@@ -182,8 +183,8 @@ for (let i = 0; i < repeatCount; i++) {
 
 // Перехват колесика мыши для горизонтального скролла
 nftList.addEventListener('wheel', (e) => {
-  e.preventDefault(); // Отключаем вертикальное поведение
-  nftList.scrollLeft += e.deltaY * 2; // Прокручиваем горизонтально
+  e.preventDefault();
+  nftList.scrollLeft += e.deltaY * 2;
 }, { passive: false });
 
 // Подсветка центральной заглушки
