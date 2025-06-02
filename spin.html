@@ -80,7 +80,7 @@
 
     #neon-marker {
       position: fixed;
-      top: calc(50% - 60px);
+      top: calc(50% - 60px); /* ПК: чуть выше центра */
       left: 50%;
       transform: translate(-50%, -50%);
       width: 1px;
@@ -90,7 +90,7 @@
       z-index: 10;
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 800px) {
       .nft-item {
         width: 30vw;
         height: 30vw;
@@ -102,8 +102,8 @@
       }
 
       #neon-marker {
-        top: 50% !important;
-        height: 250px !important;
+        top: 50%; /* Центр на телефоне */
+        height: 250px; /* Увеличенная полоска */
       }
     }
 
