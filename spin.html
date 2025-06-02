@@ -80,11 +80,11 @@
 
     #neon-marker {
       position: fixed;
-      top: 40%; /* Смещаем на 10% выше центра */
+      top: calc(50% - 50px); /* Смещаем на 50px выше центра */
       left: 50%;
       transform: translate(-50%, -50%);
       width: 1px;
-      height: 300px; /* Убираем ограничение на мобильных */
+      height: 300px; /* Одинаковая высота на всех устройствах */
       background: linear-gradient(180deg, #00ffff, #00ccff);
       box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
       z-index: 10;
@@ -101,7 +101,7 @@
         font-size: 22px;
       }
 
-      /* Убираем height ограничения для полоски */
+      /* Удаляем height для полоски на мобильных */
     }
 
     #result-modal {
