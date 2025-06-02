@@ -29,7 +29,7 @@
       display: flex;
       gap: 15px;
       width: 100%;
-      overflow-x: auto;
+      overflow-x: auto; /* Оставляем стандартную прокрутку */
       padding: 10px;
       background: rgba(0,0,0,0.4);
       border-radius: 12px;
@@ -40,7 +40,7 @@
     }
 
     .container::-webkit-scrollbar {
-      display: none;
+      display: auto; /* Показываем полосу прокрутки */
     }
 
     .nft-item {
@@ -168,7 +168,7 @@ const nftImages = [
   { src: "nft8.png", name: "NFT 8", rarity: "common" }
 ];
 
-// На ПК больше заглушек (10 раз), на телефоне меньше (3 раза)
+// Заглушки (повторение для ширины)
 const repeatCount = window.innerWidth > 600 ? 10 : 3;
 for (let i = 0; i < repeatCount; i++) {
   nftImages.forEach(nft => {
@@ -177,16 +177,6 @@ for (let i = 0; i < repeatCount; i++) {
     item.style.backgroundImage = `url(${nft.src})`;
     nftList.appendChild(item);
   });
-}
-
-// Прокрутка колесиком мыши на ПК без Shift
-if (window.innerWidth > 600) {
-  nftList.addEventListener('wheel', (e) => {
-    if (e.deltaY !== 0) {
-      e.preventDefault(); // Отключаем вертикальное поведение
-      nftList.scrollLeft += e.deltaY * 2; // Горизонтальная прокрутка
-    }
-  }, { passive: false });
 }
 
 function highlightNFT() {
