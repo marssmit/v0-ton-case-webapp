@@ -179,11 +179,11 @@ for (let i = 0; i < repeatCount; i++) {
   });
 }
 
-// Прокрутка колесиком мыши на ПК
+// Добавляем обработчик для прокрутки колесиком мыши на ПК
 if (window.innerWidth > 600) {
   nftList.addEventListener('wheel', (e) => {
     e.preventDefault();
-    nftList.scrollLeft += e.deltaY;
+    nftList.scrollLeft += e.deltaY * 2;  // Умножаем на 2 для увеличения скорости
   }, { passive: false });
 }
 
