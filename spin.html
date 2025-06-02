@@ -29,7 +29,7 @@
       display: flex;
       gap: 15px;
       width: 100%;
-      overflow-x: auto; /* Оставляем стандартную прокрутку */
+      overflow-x: auto;
       padding: 10px;
       background: rgba(0,0,0,0.4);
       border-radius: 12px;
@@ -37,10 +37,15 @@
       align-items: center;
       position: relative;
       scroll-behavior: smooth;
+      cursor: grab; /* Курсор для drag-and-scroll */
+    }
+
+    .container.dragging {
+      cursor: grabbing;
     }
 
     .container::-webkit-scrollbar {
-      display: auto; /* Показываем полосу прокрутки */
+      display: none;
     }
 
     .nft-item {
@@ -168,7 +173,6 @@ const nftImages = [
   { src: "nft8.png", name: "NFT 8", rarity: "common" }
 ];
 
-// Заглушки (повторение для ширины)
 const repeatCount = window.innerWidth > 600 ? 10 : 3;
 for (let i = 0; i < repeatCount; i++) {
   nftImages.forEach(nft => {
@@ -179,6 +183,7 @@ for (let i = 0; i < repeatCount; i++) {
   });
 }
 
+// Подсветка центральной заглушки
 function highlightNFT() {
   const markerX = window.innerWidth / 2;
   const items = document.querySelectorAll(".nft-item");
@@ -192,11 +197,41 @@ function highlightNFT() {
     }
   });
 }
-
 nftList.addEventListener("scroll", highlightNFT);
 window.addEventListener("resize", highlightNFT);
 highlightNFT();
 
+// Drag-and-Scroll реализация
+let isDown = false;
+let startX;
+let scrollLeft;
+
+nftList.addEventListener('mousedown', (e) => {
+  isDown = true;
+  nftList.classList.add('dragging');
+  startX = e.pageX - nftList.offsetLeft;
+  scrollLeft = nftList.scrollLeft;
+});
+
+nftList.addEventListener('mouseleave', () => {
+  isDown = false;
+  nftList.classList.remove('dragging');
+});
+
+nftList.addEventListener('mouseup', () => {
+  isDown = false;
+  nftList.classList.remove('dragging');
+});
+
+nftList.addEventListener('mousemove', (e) => {
+  if (!isDown) return;
+  e.preventDefault();
+  const x = e.pageX - nftList.offsetLeft;
+  const walk = (x - startX) * 2; // скорость прокрутки
+  nftList.scrollLeft = scrollLeft - walk;
+});
+
+// Кнопка "Испытать фортуну"
 function getRandomNFT() {
   const chance = Math.random() * 100;
   if (chance < 0.5) return nftImages.find(nft => nft.rarity === "legendary");
