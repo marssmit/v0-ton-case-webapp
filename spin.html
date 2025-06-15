@@ -78,19 +78,6 @@
       background-color: #00cccc;
     }
 
-    #neon-marker {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 1px;
-      height: 300px;
-      background: linear-gradient(180deg, #00ffff, #00ccff);
-      box-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
-      z-index: 10;
-    }
-
-    /* Новые стили индикатора */
     #scroll-indicator {
       position: absolute;
       top: 50%;
@@ -110,6 +97,12 @@
       text-shadow: 0 0 5px #00ffff;
       opacity: 0.8;
       margin: 2px 0;
+      /* Свернуть внутрь */
+      transform: rotate(180deg);
+    }
+
+    .arrow.arrow-down {
+      transform: none; /* нижняя стрелка прямо */
     }
 
     .center-line {
@@ -120,15 +113,14 @@
       margin: 4px 0;
     }
 
-    /* Затухание индикатора при движении */
     body.scrolling #scroll-indicator {
       opacity: 0.3;
     }
 
     @media (max-width: 600px) {
       .nft-item {
-        width: 30vw;
-        height: 30vw;
+        width: 45vw;
+        height: 45vw;
       }
 
       #fortune-btn {
@@ -136,16 +128,13 @@
         font-size: 22px;
       }
 
-      #neon-marker {
-        height: 200px;
+      .arrow {
+        font-size: 18px;
       }
 
       .center-line {
-        height: 80px;
-      }
-
-      .arrow {
-        font-size: 18px;
+        height: 100px;
+        width: 2px;
       }
     }
 
@@ -186,17 +175,14 @@
   <h1 id="case-title">Кейс</h1>
 
   <div class="container" id="nft-list">
-    <!-- NFT элементы будут динамически -->
+    <!-- NFT элементы динамически -->
   </div>
 
-  <!-- Индикатор центральной полосы и стрелок -->
   <div id="scroll-indicator">
     <div class="arrow arrow-up">▲</div>
     <div class="center-line"></div>
-    <div class="arrow arrow-down">▼</div>
+    <div class="arrow arrow-down">▲</div>
   </div>
-
-  <div id="neon-marker"></div>
 
   <button id="fortune-btn">Испытать фортуну</button>
 
@@ -230,7 +216,6 @@
       });
     }
 
-    // Горизонтальный скролл колесом мыши
     nftList.addEventListener('wheel', (e) => {
       e.preventDefault();
       nftList.scrollLeft += e.deltaY * 2;
@@ -241,11 +226,9 @@
       }, 150);
     }, { passive: false });
 
-    // Подсветка центрального элемента при скролле
     function highlightNFT() {
       const markerX = window.innerWidth / 2;
-      const items = document.querySelectorAll(".nft-item");
-      items.forEach(item => {
+      document.querySelectorAll(".nft-item").forEach(item => {
         const rect = item.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         if (Math.abs(centerX - markerX) < rect.width / 4) {
